@@ -1,0 +1,15 @@
+VS Code mein is folder (mobile-app) ko Open Folder se kholo, phir Terminal mein:
+
+git add .
+git commit -m "Add JNVST papers 1 and 2"
+git push
+
+(Pehli baar ho to:
+git init
+git add .
+git commit -m "Sahaj Academy app"
+git branch -M main
+git remote add origin https://github.com/Aman-here-1/mobile-app.git
+git push -u origin main --force)
+
+Push ke baad GitHub > Actions tab > "Build Sahaj Academy APK" > Sahaj-Academy-APK download.

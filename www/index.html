@@ -1,0 +1,764 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif;overscroll-behavior:none;-webkit-tap-highlight-color:transparent}[hidden]{display:none!important}img{max-width:100%}</style>
+<title>Sahaj Academy</title>
+<style>
+@font-face{font-family:'Bricolage Grotesque';font-weight:600;font-style:normal;font-display:swap;src:url(fonts/bricolage-grotesque-latin-600-normal.woff2) format('woff2')}
+@font-face{font-family:'Bricolage Grotesque';font-weight:700;font-style:normal;font-display:swap;src:url(fonts/bricolage-grotesque-latin-700-normal.woff2) format('woff2')}
+@font-face{font-family:'Bricolage Grotesque';font-weight:800;font-style:normal;font-display:swap;src:url(fonts/bricolage-grotesque-latin-800-normal.woff2) format('woff2')}
+@font-face{font-family:'Hind';font-weight:400;font-style:normal;font-display:swap;src:url(fonts/hind-latin-400-normal.woff2) format('woff2')}
+@font-face{font-family:'Hind';font-weight:500;font-style:normal;font-display:swap;src:url(fonts/hind-latin-500-normal.woff2) format('woff2')}
+@font-face{font-family:'Hind';font-weight:600;font-style:normal;font-display:swap;src:url(fonts/hind-latin-600-normal.woff2) format('woff2')}
+@font-face{font-family:'Noto Sans Gujarati';font-weight:400;font-style:normal;font-display:swap;src:url(fonts/noto-sans-gujarati-gujarati-400-normal.woff2) format('woff2')}
+@font-face{font-family:'Noto Sans Gujarati';font-weight:600;font-style:normal;font-display:swap;src:url(fonts/noto-sans-gujarati-gujarati-600-normal.woff2) format('woff2')}
+@font-face{font-family:'Noto Sans Gujarati';font-weight:700;font-style:normal;font-display:swap;src:url(fonts/noto-sans-gujarati-gujarati-700-normal.woff2) format('woff2')}
+
+/* Layout: one phone-width column centred on any screen; bottom tab bar; screens swap inside. Navy ink + marigold accent, paper ground. */
+:root{
+  --paper:#f5f6f8; --card:#ffffff; --ink:#14213d; --muted:#5d6985; --line:#dfe3ec;
+  --accent:#f2a900; --accent-ink:#2b1d00; --good:#1f8a4c; --good-bg:#e3f4ea; --bad:#c23a2b; --bad-bg:#fbe6e3;
+  --navy:#14213d; --on-navy:#ffffff; --navy-soft:#26365f;
+  --f-display:'Bricolage Grotesque','Noto Sans Gujarati','Hind',system-ui,sans-serif; --f-body:'Hind','Noto Sans Gujarati',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0e1526; --card:#172038; --ink:#eef1f8; --muted:#9aa6c4; --line:#27324f;
+  --accent:#f5b72b; --accent-ink:#2b1d00; --good:#4cc283; --good-bg:#12301f; --bad:#ff7d6e; --bad-bg:#3a1a17;
+  --navy:#0a1020; --on-navy:#eef1f8; --navy-soft:#1c2848; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0e1526; --card:#172038; --ink:#eef1f8; --muted:#9aa6c4; --line:#27324f;
+  --accent:#f5b72b; --accent-ink:#2b1d00; --good:#4cc283; --good-bg:#12301f; --bad:#ff7d6e; --bad-bg:#3a1a17;
+  --navy:#0a1020; --on-navy:#eef1f8; --navy-soft:#1c2848; color-scheme:dark}
+html,body{height:100%}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5;padding-inline:0}
+*{box-sizing:border-box}
+h1,h2,h3{font-family:var(--f-display);margin:0;text-wrap:balance;letter-spacing:-.01em}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+#app{max-width:480px;height:100%;margin-inline:auto;background:var(--paper);position:relative;display:flex;flex-direction:column;border-inline:1px solid var(--line)}
+.scroll{flex:1;overflow-y:auto;padding:0 16px 24px;min-width:0}
+.top{background:var(--navy);color:var(--on-navy);padding:18px 16px 22px;display:flex;flex-direction:column;gap:6px}
+.top .row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-family:var(--f-display);font-weight:800;font-size:15px;letter-spacing:.02em;display:flex;align-items:center;gap:8px}
+.brand img{height:34px;width:auto;background:#fff;border-radius:8px;padding:3px;display:block}
+.hero .brand{flex-direction:column;align-items:flex-start;gap:12px}
+.hero .brand img{height:96px;border-radius:14px;padding:6px}
+.pdf{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
+.pdf .ic{width:38px;height:44px;border-radius:6px;background:var(--bad-bg);color:var(--bad);display:grid;place-items:center;font-family:var(--f-display);font-weight:800;font-size:11px;flex:none}
+.top h1{font-size:24px;font-weight:700}
+.top p{margin:0;color:color-mix(in srgb,var(--on-navy) 70%,transparent);font-size:14px}
+.chip{display:inline-flex;align-items:center;border:1px solid color-mix(in srgb,var(--on-navy) 35%,transparent);border-radius:99px;padding:3px 12px;font-size:13px;font-weight:600;background:transparent;color:var(--on-navy)}
+.sec{margin-top:22px;display:flex;flex-direction:column;gap:10px}
+.sec>h2{font-size:17px;font-weight:700}
+.sec>.sub{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.link{background:none;border:0;color:var(--muted);font-size:13px;text-decoration:underline;padding:4px 0}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;min-width:0}
+.subj{display:flex;flex-direction:column;gap:10px;text-align:left;align-items:flex-start}
+.badge{width:40px;height:40px;border-radius:10px;display:grid;place-items:center;font-family:var(--f-display);font-weight:800;font-size:17px;color:#fff}
+.subj b{font-family:var(--f-display);font-size:16px}
+.subj small,.muted{color:var(--muted);font-size:13px}
+.list{display:flex;flex-direction:column;gap:8px}
+.item{display:flex;align-items:center;gap:12px;text-align:left;width:100%}
+.item .grow{flex:1;min-width:0}
+.item b{display:block;font-weight:600}
+.num{font-family:var(--f-display);font-weight:800;font-size:15px;min-width:34px;height:34px;border-radius:8px;background:var(--paper);border:1px solid var(--line);display:grid;place-items:center;font-variant-numeric:tabular-nums}
+.arrow{color:var(--muted);font-size:18px}
+.pill{font-size:12px;font-weight:600;padding:2px 10px;border-radius:99px;background:var(--paper);border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.pill.good{background:var(--good-bg);color:var(--good);border-color:transparent}
+.pill.bad{background:var(--bad-bg);color:var(--bad);border-color:transparent}
+.btn{border:0;border-radius:10px;padding:13px 16px;font-weight:600;font-size:15px;width:100%;background:var(--accent);color:var(--accent-ink)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.alt{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+.btn.danger{background:var(--card);color:var(--bad);border:1px solid var(--line)}
+.tabbar{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-top:1px solid var(--line);background:var(--card);padding-bottom:env(safe-area-inset-bottom,0px)}
+.tabbar button{background:none;border:0;padding:10px 4px 9px;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;font-weight:600;color:var(--muted);position:relative;min-width:0;text-align:center;line-height:1.25}
+.tabbar button svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.tabbar button[aria-current="page"]{color:var(--ink)}
+.tabbar button[aria-current="page"]::before{content:"";position:absolute;top:0;left:30%;right:30%;height:3px;border-radius:0 0 3px 3px;background:var(--accent)}
+.bar{display:flex;align-items:center;gap:10px;padding:14px 16px;background:var(--navy);color:var(--on-navy)}
+.bar button{background:none;border:0;color:var(--on-navy);font-size:22px;padding:0 6px 0 0;line-height:1}
+.bar h2{font-size:18px;font-weight:700;flex:1;min-width:0}
+/* login */
+.login{flex:1;display:flex;flex-direction:column;overflow-y:auto}
+.login .hero{background:var(--navy);color:var(--on-navy);padding:40px 20px 34px;display:flex;flex-direction:column;gap:12px}
+.login .hero h1{font-size:34px;font-weight:800;line-height:1.1}
+.login .hero p{margin:0;color:color-mix(in srgb,var(--on-navy) 72%,transparent)}
+.login form{padding:22px 20px;display:flex;flex-direction:column;gap:14px}
+label{font-weight:600;font-size:14px}
+.field{display:flex;flex-direction:column;gap:6px}
+.input{width:100%;padding:13px 14px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:16px}
+.phone{display:flex;gap:8px}
+.phone .cc{padding:13px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-weight:600}
+.otp{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+.otp input{text-align:center;padding:13px 0;font-size:20px;font-weight:600;font-variant-numeric:tabular-nums}
+.note{background:var(--card);border:1px dashed var(--accent);border-radius:10px;padding:10px 12px;font-size:13px;color:var(--muted)}
+.err{color:var(--bad);font-size:13px;min-height:18px;margin:0}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:10px 14px;font-weight:600;min-width:64px}
+.seg button[aria-pressed="true"]{background:var(--navy);color:var(--on-navy);border-color:var(--navy)}
+/* quiz */
+.prog{height:6px;border-radius:99px;background:var(--line);overflow:hidden}
+.prog i{display:block;height:100%;background:var(--accent)}
+.q{font-family:var(--f-display);font-size:19px;font-weight:600;line-height:1.35}
+.opt{display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:13px 14px}
+.opt .l{font-family:var(--f-display);font-weight:800;min-width:26px;height:26px;border-radius:7px;background:var(--paper);display:grid;place-items:center;font-size:13px}
+.opt[aria-pressed="true"]{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 14%,var(--card))}
+.opt.right{border-color:var(--good);background:var(--good-bg)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-bg)}
+.score{display:flex;flex-direction:column;align-items:center;gap:6px;padding:26px 16px;text-align:center}
+.score .big{font-family:var(--f-display);font-weight:800;font-size:56px;line-height:1;font-variant-numeric:tabular-nums}
+.avatar{width:64px;height:64px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-family:var(--f-display);font-weight:800;font-size:26px}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.kv:last-child{border-bottom:0}
+.kv span:first-child{color:var(--muted)}
+.kv span:last-child{font-weight:600;text-align:right;min-width:0;overflow-wrap:anywhere}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.stats .card{text-align:center;padding:12px 6px}
+.stats b{display:block;font-family:var(--f-display);font-size:22px;font-weight:800;font-variant-numeric:tabular-nums}
+.stats small{color:var(--muted);font-size:12px}
+.toast{position:absolute;left:16px;right:16px;bottom:78px;background:var(--navy);color:var(--on-navy);padding:11px 14px;border-radius:10px;font-size:14px;z-index:5}
+.notice{display:flex;gap:12px;align-items:flex-start}
+.notice .d{font-family:var(--f-display);font-weight:800;font-size:12px;background:var(--accent);color:var(--accent-ink);border-radius:8px;padding:5px 7px;text-align:center;line-height:1.1;min-width:42px}
+.prose p{margin:0 0 12px}
+.badge.w{width:52px;font-size:12px;letter-spacing:.02em}
+@media (prefers-reduced-motion:no-preference){.scroll>*{animation:in .25s ease both}@keyframes in{from{opacity:.0;transform:translateY(6px)}to{opacity:1;transform:none}}}
+
+.pdf{width:100%;text-align:left}
+.pdfwrap{flex:1;overflow:auto;background:var(--line);padding:8px;min-height:0}
+.pgbox{background:#fff;margin:0 0 8px;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+.bar .zb{font-family:var(--f-display);font-weight:800;font-size:20px;min-width:36px;height:36px;border-radius:8px;background:color-mix(in srgb,var(--on-navy) 15%,transparent);padding:0}
+.pdfmsg{padding:16px;color:var(--muted)}
+.pdfmsg a{color:var(--ink)}
+.langwrap{padding:18px 20px 0}
+.about p{margin:0}
+.aboutlogo{display:flex;gap:14px;align-items:center}
+.aboutlogo img{height:72px;background:#fff;border-radius:12px;padding:5px;border:1px solid var(--line)}
+.ticks,.steps{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.ticks li{display:flex;gap:10px}
+.ticks li::before{content:"";flex:none;width:8px;height:8px;border-radius:50%;background:var(--accent);margin-top:8px}
+.steps{counter-reset:s}
+.steps li{display:flex;gap:12px;align-items:flex-start;counter-increment:s}
+.steps li::before{content:counter(s);flex:none;width:28px;height:28px;border-radius:8px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-family:var(--f-display);font-weight:800}
+</style>
+
+</head><body>
+<div id="app"></div>
+<script src="pdf.min.js"></script>
+<script>
+"use strict";
+/* ---------- Data ---------- */
+var SUBJ={m:{n:'Maths',c:'#c2410c',b:'M'},s:{n:'Science',c:'#0f766e',b:'S'},e:{n:'English',c:'#1d4ed8',b:'E'},ss:{n:'Social Science',c:'#a16207',b:'SS'},p:{n:'Physics',c:'#0369a1',b:'P'},c:{n:'Chemistry',c:'#7e22ce',b:'C'}};
+function subjectsFor(cls){return cls<=10?['m','s','e','ss']:['p','c','m','e'];}
+var CH={
+6:{m:[['Knowing Our Numbers','Place value, comparing and rounding large numbers, and reading numbers in the Indian and International systems.'],['Whole Numbers','Number line, successor and predecessor, and properties like commutative, associative and distributive.'],['Playing with Numbers','Factors, multiples, prime and composite numbers, divisibility tests, HCF and LCM.']],
+ s:[['Food: Where Does It Come From?','Plant and animal food sources, parts of a plant we eat, and what herbivores, carnivores and omnivores eat.'],['Components of Food','Carbohydrates, proteins, fats, vitamins and minerals, balanced diet and deficiency diseases.'],['Fibre to Fabric','Natural fibres such as cotton and jute, spinning, weaving and knitting of fabric.']],
+ e:[['A Tale of Two Birds','Reading comprehension on a story about two birds, with focus on vocabulary and sentence structure.'],['Nouns and Pronouns','Types of nouns, pronouns and how to use them correctly in sentences.'],['Letter Writing','Format of informal letters with address, greeting, body and closing.']],
+ ss:[['What, Where, How and When?','How historians study the past using sources like manuscripts, inscriptions and tools.'],['Globe: Latitudes and Longitudes','Equator, tropics, prime meridian, and how we locate a place using coordinates.'],['Diversity and Discrimination','Understanding diversity in India and why equality matters in everyday life.']]},
+7:{m:[['Integers','Addition, subtraction, multiplication and division of integers, with properties on the number line.'],['Fractions and Decimals','Operations on fractions and decimals, and converting between the two.'],['Simple Equations','Forming and solving equations in one variable, and word problems based on them.']],
+ s:[['Nutrition in Plants','Photosynthesis, modes of nutrition in plants like parasites and insectivores.'],['Acids, Bases and Salts','Indicators, neutralisation and everyday uses of acids and bases.'],['Heat','Temperature, thermometers, conduction, convection and radiation.']],
+ e:[['Three Questions','Comprehension and discussion on values and decision making in a short story.'],['Tenses','Simple, continuous and perfect forms of present, past and future tense.'],['Notice Writing','Format and language of school notices.']],
+ ss:[['Tracing Changes Through a Thousand Years','New and old terminologies, historians and their sources from 700 to 1750.'],['Our Changing Earth','Interior of the earth, rocks, earthquakes and volcanoes.'],['On Equality','Equality in Indian democracy and the issue of inequality.']]},
+8:{m:[['Rational Numbers','Properties of rational numbers, representation on a number line and operations.'],['Squares and Square Roots','Perfect squares, patterns, finding square roots by factorisation and division.'],['Algebraic Expressions and Identities','Terms, monomials, binomials and standard identities like (a+b)².']],
+ s:[['Crop Production and Management','Agricultural practices from soil preparation to harvesting and storage.'],['Force and Pressure','Contact and non contact forces, pressure in liquids and gases, atmospheric pressure.'],['Coal and Petroleum','Fossil fuels, their formation, products and need for conservation.']],
+ e:[['The Best Christmas Present in the World','Reading comprehension of a letter based story with a theme of war and humanity.'],['Voice: Active and Passive','Converting sentences between active and passive voice.'],['Reported Speech','Changing direct speech to indirect speech with correct tense and pronoun shifts.']],
+ ss:[['How, When and Where','Colonial rule, the idea of periodisation and how the British collected information.'],['Resources','Natural and human made resources and sustainable development.'],['The Indian Constitution','Key features, fundamental rights and the need for a constitution.']]},
+9:{m:[['Number Systems','Rational and irrational numbers, real numbers on the number line and laws of exponents.'],['Polynomials','Zeroes of a polynomial, remainder theorem, factorisation and algebraic identities.'],['Triangles','Congruence rules, properties of triangles and inequalities in a triangle.']],
+ s:[['Matter in Our Surroundings','States of matter, evaporation, latent heat and effect of temperature and pressure.'],['Motion','Distance, displacement, speed, velocity, acceleration and equations of motion.'],['The Fundamental Unit of Life','Cell structure, organelles, and differences between plant and animal cells.']],
+ e:[['The Fun They Had','Comprehension on a future school story, with vocabulary and writing tasks.'],['Tenses and Modals','Using tenses and modal verbs correctly in writing and speech.'],['Writing a Diary Entry','Format and style of personal diary entries.']],
+ ss:[['The French Revolution','Causes, key events and impact of the revolution in France in 1789.'],['India: Size and Location','Location, neighbours, standard meridian and the importance of India\'s position.'],['What is Democracy? Why Democracy?','Features of democracy and arguments for and against it.']]},
+10:{m:[['Real Numbers','Euclid\'s division lemma, fundamental theorem of arithmetic and irrational numbers.'],['Quadratic Equations','Solving by factorisation, completing the square and the quadratic formula, and nature of roots.'],['Trigonometry','Trigonometric ratios, identities and applications to heights and distances.']],
+ s:[['Chemical Reactions and Equations','Balancing equations, types of reactions, oxidation and reduction and corrosion.'],['Electricity','Current, potential difference, Ohm\'s law, resistance and electric power.'],['Life Processes','Nutrition, respiration, transportation and excretion in living organisms.']],
+ e:[['A Letter to God','Comprehension of a story about faith, with questions on theme and character.'],['Reported Speech and Tenses','Revision of direct and indirect speech, with commonly tested tense rules.'],['Formal Letter Writing','Format for letters of complaint, application and enquiry.']],
+ ss:[['The Rise of Nationalism in Europe','French Revolution\'s impact, unification of Germany and Italy and nationalism.'],['Resources and Development','Types of resources, land use, soil types and resource planning in India.'],['Power Sharing','Belgium and Sri Lanka examples, forms of power sharing in a democracy.']]},
+11:{p:[['Units and Measurement','SI units, dimensions, significant figures and errors in measurement.'],['Motion in a Straight Line','Position, velocity, acceleration, and graphs of motion with uniform acceleration.'],['Laws of Motion','Newton\'s three laws, momentum, friction and circular motion basics.']],
+ c:[['Some Basic Concepts of Chemistry','Mole concept, stoichiometry, laws of chemical combination and limiting reagent.'],['Structure of Atom','Atomic models, quantum numbers, orbitals and electronic configuration.'],['Chemical Bonding','Ionic, covalent bonds, VSEPR theory, hybridisation and molecular orbital theory.']],
+ m:[['Sets','Types of sets, subsets, Venn diagrams and operations on sets.'],['Trigonometric Functions','Radian measure, trigonometric functions and identities, and their graphs.'],['Limits and Derivatives','Intuitive idea of limits and derivative, with rules of differentiation.']],
+ e:[['The Portrait of a Lady','Reading and analysing a memoir about a grandmother, with value based questions.'],['Reading Comprehension Skills','Strategies for unseen passages, inference and vocabulary in context.'],['Essay and Article Writing','Structure, tone and format of articles and essays for board exams.']]},
+12:{p:[['Electric Charges and Fields','Coulomb\'s law, electric field, field lines and Gauss\'s theorem.'],['Current Electricity','Drift velocity, Ohm\'s law, Kirchhoff\'s rules and the Wheatstone bridge.'],['Ray Optics','Reflection, refraction, lenses, mirrors and optical instruments.']],
+ c:[['Solutions','Concentration terms, colligative properties and Raoult\'s law.'],['Electrochemistry','Electrochemical cells, Nernst equation, conductance and electrolysis.'],['Haloalkanes and Haloarenes','Nomenclature, preparation and reactions including SN1 and SN2 mechanisms.']],
+ m:[['Relations and Functions','Types of relations and functions, one one and onto functions, and composition.'],['Integrals','Integration as the reverse of differentiation, methods and definite integrals.'],['Probability','Conditional probability, Bayes\' theorem and random variables.']],
+ e:[['The Last Lesson','Comprehension and theme analysis of a story about language and identity.'],['Lost Spring','Reading a prose piece about child labour and answering inference based questions.'],['Report and Letter to the Editor','Formats and language for board exam writing tasks.']]}
+};
+function Q(q,o,a){return {q:q,o:o,a:a};}
+var TEST={
+'6-m':[Q('Which is the smallest prime number?',['0','1','2','3'],2),Q('What is 3/4 of 100?',['25','50','75','80'],2),Q('What is the LCM of 4 and 6?',['10','12','18','24'],1)],
+'6-s':[Q('Which of these is a source of light?',['Moon','Sun','Mirror','Book'],1),Q('Plants make their food by which process?',['Respiration','Digestion','Photosynthesis','Evaporation'],2),Q('At what temperature does pure water boil at sea level?',['50 °C','90 °C','100 °C','120 °C'],2)],
+'6-e':[Q('What is the plural of "child"?',['Childs','Children','Childrens','Childes'],1),Q('Opposite of "ancient" is',['Old','Modern','Huge','Slow'],1),Q('Which word is a proper noun?',['City','River','Delhi','Boy'],2)],
+'6-ss':[Q('What is the capital of India?',['Mumbai','New Delhi','Kolkata','Chennai'],1),Q('Which is the largest continent?',['Africa','Europe','Asia','Australia'],2),Q('The line at 0° latitude is called',['Prime Meridian','Equator','Tropic of Cancer','Arctic Circle'],1)],
+'7-m':[Q('Find (-3) + (-5).',['-8','8','-2','2'],0),Q('What is the perimeter of a square of side 5 cm?',['10 cm','15 cm','20 cm','25 cm'],2),Q('What is the value of 2³?',['6','8','9','12'],1)],
+'7-s':[Q('Acids turn blue litmus paper',['Red','Green','Yellow','White'],0),Q('The SI unit of heat energy is',['Watt','Joule','Newton','Pascal'],1),Q('Which gas do plants take in for photosynthesis?',['Oxygen','Nitrogen','Carbon dioxide','Hydrogen'],2)],
+'7-e':[Q('Past tense of "go" is',['Goed','Gone','Went','Going'],2),Q('A synonym of "happy" is',['Sad','Joyful','Angry','Tired'],1),Q('Fill in the blank: ___ umbrella',['A','An','The','Some'],1)],
+'7-ss':[Q('Who built the Taj Mahal?',['Akbar','Babur','Shah Jahan','Aurangzeb'],2),Q('Which is the longest river in India?',['Yamuna','Ganga','Godavari','Narmada'],1),Q('Who chaired the Drafting Committee of the Constitution?',['Nehru','Gandhi','Dr B. R. Ambedkar','Patel'],2)],
+'8-m':[Q('What is the square root of 144?',['10','11','12','14'],2),Q('(a + b)² equals',['a² + b²','a² + 2ab + b²','a² - 2ab + b²','2a + 2b'],1),Q('What is the cube of 3?',['9','18','27','81'],2)],
+'8-s':[Q('The SI unit of force is',['Joule','Newton','Watt','Pascal'],1),Q('Which of these is a non metal?',['Iron','Copper','Sulphur','Zinc'],2),Q('Pressure is equal to',['Force × area','Force / area','Area / force','Mass / volume'],1)],
+'8-e':[Q('Passive voice of "He writes a letter" is',['A letter is written by him','A letter was written by him','He is written a letter','A letter writes him'],0),Q('Opposite of "brave" is',['Strong','Coward','Bold','Kind'],1),Q('Which word is a conjunction?',['Quickly','And','Table','Run'],1)],
+'8-ss':[Q('The Battle of Plassey was fought in',['1757','1857','1664','1764'],0),Q('The two houses of the Indian Parliament are Lok Sabha and',['Vidhan Sabha','Rajya Sabha','Gram Sabha','Lok Adalat'],1),Q('How many fundamental rights does the Constitution list?',['Four','Five','Six','Seven'],2)],
+'9-m':[Q('The sum of the angles of a triangle is',['90°','180°','270°','360°'],1),Q('The zero of the polynomial x - 3 is',['-3','0','3','1'],2),Q('Which of these is an irrational number?',['4','0.5','√2','22/7'],2)],
+'9-s':[Q('Newton\'s first law of motion is also called the law of',['Gravity','Inertia','Action','Energy'],1),Q('The atomic number of carbon is',['4','6','8','12'],1),Q('Speed is equal to',['Distance × time','Distance / time','Time / distance','Mass × velocity'],1)],
+'9-e':[Q('"She has gone" is in which tense?',['Simple past','Present perfect','Past perfect','Present continuous'],1),Q('A synonym of "rapid" is',['Slow','Quick','Heavy','Late'],1),Q('Choose the correct one: Neither of the boys ___ come.',['have','has','are','were'],1)],
+'9-ss':[Q('The French Revolution began in',['1689','1789','1815','1917'],1),Q('Democracy means rule by',['A king','The army','The people','The rich'],2),Q('India lies in which hemispheres?',['Northern and Eastern','Southern and Western','Northern and Western','Southern and Eastern'],0)],
+'10-m':[Q('The discriminant of ax² + bx + c = 0 is',['b² - 4ac','b² + 4ac','4ac - b','2ab'],0),Q('What is sin 30°?',['0','1/2','√3/2','1'],1),Q('HCF × LCM of two numbers equals',['Their sum','Their difference','Their product','Their ratio'],2)],
+'10-s':[Q('The chemical formula of baking soda is',['Na₂CO₃','NaHCO₃','NaCl','NaOH'],1),Q('Myopia is corrected using a',['Convex lens','Concave lens','Plane mirror','Prism'],1),Q('Ohm\'s law is',['V = I / R','V = I × R','I = V × R','R = V × I'],1)],
+'10-e':[Q('"He said, \'I am happy\'" in reported speech is',['He said that he is happy','He said that he was happy','He says he was happy','He said I am happy'],1),Q('"As brave as a lion" is an example of',['Metaphor','Simile','Hyperbole','Irony'],1),Q('A synonym of "abundant" is',['Scarce','Plentiful','Rare','Weak'],1)],
+'10-ss':[Q('Who led the Salt March in 1930?',['Subhas Bose','Nehru','Mahatma Gandhi','Patel'],2),Q('Which state does the Tropic of Cancer pass through?',['Kerala','Gujarat','Punjab','Assam'],1),Q('Agriculture belongs to which sector?',['Primary','Secondary','Tertiary','Quaternary'],0)],
+'11-p':[Q('The SI unit of momentum is',['kg m/s','kg m/s²','N s²','J s'],0),Q('The dimensional formula of force is',['MLT⁻¹','MLT⁻²','ML²T⁻²','M²LT⁻²'],1),Q('Acceleration due to gravity on Earth is about',['9.8 m/s²','98 m/s²','0.98 m/s²','19.6 m/s²'],0)],
+'11-c':[Q('The atomic number of sodium is',['9','10','11','12'],2),Q('Avogadro\'s number is approximately',['6.022 × 10²³','6.022 × 10²⁰','3.0 × 10⁸','1.6 × 10⁻¹⁹'],0),Q('The pH of pure water at 25 °C is',['0','7','10','14'],1)],
+'11-m':[Q('How many subsets does a set with 3 elements have?',['3','6','8','9'],2),Q('sin²θ + cos²θ equals',['0','1','2','tan θ'],1),Q('What is log₁₀ 100?',['1','2','10','100'],1)],
+'11-e':[Q('A synonym of "eloquent" is',['Silent','Articulate','Shy','Angry'],1),Q('"The wind whispered" uses which figure of speech?',['Simile','Personification','Alliteration','Oxymoron'],1),Q('Choose the correct one: Each of the students ___ a book.',['have','has','are','were'],1)],
+'12-p':[Q('The SI unit of capacitance is',['Henry','Farad','Tesla','Weber'],1),Q('The speed of light in vacuum is about',['3 × 10⁶ m/s','3 × 10⁸ m/s','3 × 10¹⁰ m/s','3 × 10⁵ m/s'],1),Q('The SI unit of power of a lens is',['Metre','Dioptre','Watt','Lumen'],1)],
+'12-c':[Q('Which of these is an alkali metal?',['Calcium','Potassium','Aluminium','Iron'],1),Q('The unit of molarity is',['mol/kg','mol/L','g/L','mol/m'],1),Q('Carbon in methane is',['sp','sp²','sp³','dsp²'],2)],
+'12-m':[Q('d/dx (sin x) equals',['cos x','-cos x','-sin x','tan x'],0),Q('∫ (1/x) dx equals',['x','ln|x| + C','1/x² + C','e^x + C'],1),Q('The determinant of the 2×2 identity matrix is',['0','1','2','-1'],1)],
+'12-e':[Q('A synonym of "ephemeral" is',['Eternal','Short lived','Large','Brave'],1),Q('Who wrote "Lost Spring"?',['Anees Jung','Ruskin Bond','R. K. Narayan','Alphonse Daudet'],0),Q('"He is as old as the hills" is an example of',['Hyperbole','Simile','Pun','Metonymy'],0)]
+};
+/* Entrance exams. Each topic: [en title, en note, gu title, gu note]. Each question: [en q, en options, answer index, gu q, gu options]. Answer index is shared by both mediums. */
+var EXD={
+jnvst:{
+ mat:{q:[["Find the next number: 2, 4, 6, 8, ?",["9","10","11","12"],1,"આગળની સંખ્યા શોધો: 2, 4, 6, 8, ?",["9","10","11","12"]],["Which one is the odd one out?",["Apple","Mango","Potato","Banana"],2,"અલગ પડતું કયું છે?",["સફરજન","કેરી","બટાટા","કેળું"]],["You face north and turn right. Which direction do you face now?",["East","West","South","North"],0,"તમે ઉત્તર તરફ મોઢું રાખીને ઊભા છો અને જમણી તરફ વળો છો. હવે કઈ દિશા તરફ મોઢું થશે?",["પૂર્વ","પશ્ચિમ","દક્ષિણ","ઉત્તર"]]]},
+ env:{q:[["Which part of a plant absorbs water from the soil?",["Leaf","Root","Flower","Stem"],1,"છોડનો કયો ભાગ જમીનમાંથી પાણી શોષે છે?",["પાંદડું","મૂળ","ફૂલ","થડ"]],["Which gas do we breathe in to stay alive?",["Oxygen","Carbon dioxide","Nitrogen","Hydrogen"],0,"જીવતા રહેવા માટે આપણે કયો વાયુ શ્વાસમાં લઈએ છીએ?",["ઓક્સિજન","કાર્બન ડાયોક્સાઇડ","નાઇટ્રોજન","હાઇડ્રોજન"]],["Which of these is a herbivore?",["Lion","Cow","Tiger","Crocodile"],1,"આમાંથી શાકાહારી પ્રાણી કયું છે?",["સિંહ","ગાય","વાઘ","મગર"]]]},
+ mth:{q:[["What is 25 × 4?",["80","90","100","120"],2,"25 × 4 = કેટલા?",["80","90","100","120"]],["What is 1/2 + 1/4?",["2/6","3/4","1/6","2/4"],1,"1/2 + 1/4 = કેટલા?",["2/6","3/4","1/6","2/4"]],["Find the perimeter of a rectangle 6 cm long and 4 cm wide.",["10 cm","20 cm","24 cm","12 cm"],1,"6 સેમી લંબાઈ અને 4 સેમી પહોળાઈવાળા લંબચોરસની પરિમિતિ શોધો.",["10 સેમી","20 સેમી","24 સેમી","12 સેમી"]]]},
+ lang:{q:[["Choose the verb: Ravi runs fast.",["Ravi","runs","fast","None"],1,"ગુજરાતી મૂળાક્ષરોમાં પહેલો સ્વર કયો છે?",["ક","અ","મ","ત"]],["The opposite of hot is",["Warm","Cold","Soft","Dry"],1,"ગરમ નો વિરોધી શબ્દ કયો છે?",["નરમ","ઠંડું","સૂકું","મીઠું"]],["Fill in the blank: She ___ a book.",["read","reads","reading","readed"],1,"ફૂલ નો સમાનાર્થી શબ્દ કયો છે?",["પાન","પુષ્પ","મૂળ","ડાળ"]]]}
+},
+cet:{
+ mat:{q:[["Find the next number: 5, 10, 20, 40, ?",["60","70","80","100"],2,"આગળની સંખ્યા શોધો: 5, 10, 20, 40, ?",["60","70","80","100"]],["Sita is Ram's sister. Ram is Mohan's son. How is Sita related to Mohan?",["Wife","Mother","Daughter","Sister"],2,"સીતા રામની બહેન છે. રામ મોહનનો દીકરો છે. સીતા મોહનની શું થાય?",["પત્ની","માતા","દીકરી","બહેન"]],["Meena is 3rd from the left and 4th from the right in a row. How many children are in the row?",["6","7","8","5"],0,"એક હરોળમાં મીના ડાબેથી ત્રીજી અને જમણેથી ચોથી છે. હરોળમાં કુલ કેટલાં બાળકો છે?",["6","7","8","5"]]]},
+ env:{q:[["Which of these is a good source of vitamin C?",["Wheat","Orange","Butter","Salt"],1,"વિટામિન સીનો સારો સ્ત્રોત કયો છે?",["ઘઉં","નારંગી","માખણ","મીઠું"]],["Which is a renewable source of energy?",["Coal","Petrol","Sunlight","Diesel"],2,"નવીનીકરણીય ઊર્જાનો સ્ત્રોત કયો છે?",["કોલસો","પેટ્રોલ","સૂર્યપ્રકાશ","ડીઝલ"]],["Which habit helps to save water?",["Leaving the tap open","Closing the tap while brushing","Washing the car daily","Wasting water"],1,"પાણી બચાવવામાં કઈ ટેવ મદદ કરે છે?",["નળ ખુલ્લો રાખવો","બ્રશ કરતી વખતે નળ બંધ રાખવો","રોજ ગાડી ધોવી","પાણીનો બગાડ કરવો"]]]},
+ mth:{q:[["What is the LCM of 3 and 5?",["8","15","30","10"],1,"3 અને 5 નો લ.સા.અ. કેટલો થાય?",["8","15","30","10"]],["How many grams are there in 1 kg?",["10","100","1000","10000"],2,"1 કિલોગ્રામમાં કેટલા ગ્રામ હોય?",["10","100","1000","10000"]],["3 pens cost Rs 15. What is the cost of 5 pens?",["Rs 20","Rs 25","Rs 30","Rs 35"],1,"3 પેનની કિંમત 15 રૂપિયા છે. 5 પેનની કિંમત કેટલી થાય?",["20 રૂપિયા","25 રૂપિયા","30 રૂપિયા","35 રૂપિયા"]]]},
+ lang:{q:[["She ___ to school yesterday.",["go","goes","went","going"],2,"બહુવચન બનાવો: પુસ્તક",["પુસ્તક","પુસ્તકી","પુસ્તકો","પુસ્તકે"]],["Choose a or an: I saw ___ elephant.",["a","an","on","in"],1,"વિરોધી શબ્દ કયો છે: દિવસ",["સવાર","રાત","સાંજ","બપોર"]],["The opposite of early is",["Soon","Late","Fast","Quick"],1,"પાણી નો સમાનાર્થી શબ્દ કયો છે?",["દૂધ","જળ","અગ્નિ","હવા"]]]}
+}};
+var EXN={jnvst:'JNVST',cet:'CET'},EXF={jnvst:'Jawahar Navodaya Vidyalaya Selection Test',cet:'Common Entrance Test'},EXC={jnvst:'#0f766e',cet:'#b45309'};
+var EXO=['mat','env','mth','lang','prac'];
+/* PDF registry */
+var PDF={
+ "mat": [
+  {
+   "f": "pdfs/mat-mirror-image.pdf",
+   "med": "both",
+   "pg": 23,
+   "mb": "1.4",
+   "en": "Mirror Image (Aakruti)",
+   "gu": "મિરર ઇમેજ (આકૃતિ)"
+  }
+ ],
+ "env": [
+  {
+   "f": "pdfs/evs-gujarati.pdf",
+   "med": "gu",
+   "pg": 6,
+   "mb": "0.6",
+   "gu": "પર્યાવરણ (EVS)"
+  },
+  {
+   "f": "pdfs/evs-english.pdf",
+   "med": "en",
+   "pg": 4,
+   "mb": "0.7",
+   "en": "EVS (English)"
+  }
+ ],
+ "mth": [
+  {
+   "f": "pdfs/maths-number-system-gujarati.pdf",
+   "med": "gu",
+   "pg": 8,
+   "mb": "0.1",
+   "gu": "સંખ્યા પદ્ધતિ (PYQ)"
+  },
+  {
+   "f": "pdfs/maths-factors-multiples-english.pdf",
+   "med": "en",
+   "pg": 5,
+   "mb": "0.1",
+   "en": "Factors and Multiples"
+  }
+ ],
+ "lang": [
+  {
+   "f": "pdfs/language-gujarati-50-passages.pdf",
+   "med": "gu",
+   "pg": 19,
+   "mb": "1.7",
+   "gu": "ગુજરાતી 50 પેસેજ"
+  },
+  {
+   "f": "pdfs/language-gujarati-synonyms.pdf",
+   "med": "gu",
+   "pg": 7,
+   "mb": "1.0",
+   "gu": "સમાનાર્થી શબ્દો"
+  }
+ ],
+ "prac": [
+  {
+   "f": "pdfs/jnvst-practice-paper-1-english.pdf",
+   "med": "en",
+   "pg": 9,
+   "mb": "1.0",
+   "exam": "jnvst",
+   "en": "JNVST Practice Paper 1"
+  },
+  {
+   "f": "pdfs/jnvst-practice-paper-1-gujarati.pdf",
+   "med": "gu",
+   "pg": 9,
+   "mb": "1.1",
+   "exam": "jnvst",
+   "gu": "JNVST પ્રેક્ટિસ પેપર 1"
+  },
+  {
+   "f": "pdfs/jnvst-practice-paper-2-english.pdf",
+   "med": "en",
+   "pg": 8,
+   "mb": "1.9",
+   "exam": "jnvst",
+   "en": "JNVST Practice Paper 2"
+  },
+  {
+   "f": "pdfs/jnvst-practice-paper-2-gujarati.pdf",
+   "med": "gu",
+   "pg": 7,
+   "mb": "1.8",
+   "exam": "jnvst",
+   "gu": "JNVST પ્રેક્ટિસ પેપર 2"
+  }
+ ]
+};
+function pdfsFor(ex,k,m){return (PDF[k]||[]).filter(function(x){return (!x.exam||x.exam===ex)&&(x.med==='both'||x.med===m);});}
+
+var EXS={mat:{en:'MAT · Mental Ability Test',gu:'MAT · માનસિક ક્ષમતા કસોટી',t:'MAT',c:'#0f766e',b:'MAT'},env:{en:'Environment',gu:'પર્યાવરણ',t:'Environment',c:'#15803d',b:'EVS'},mth:{en:'Maths',gu:'ગણિત',t:'Maths',c:'#c2410c',b:'M'},lang:{en:'Language',gu:'ભાષા',t:'Language',c:'#1d4ed8',b:'L'},prac:{en:'Practice Test',gu:'પ્રેક્ટિસ ટેસ્ટ',t:'Practice Test',c:'#b91c1c',b:'PT'}};
+var LOGO="data:image/jpeg;base64,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";
+var NOTICES=[
+ {d:'05',m:['OCT','ઑક્ટો'],en:'Unit Test 1 for Classes 9 and 10 starts. Practice tests are open now.',gu:'ધોરણ 9 અને 10 ની એકમ કસોટી 1 શરૂ થાય છે. પ્રેક્ટિસ ટેસ્ટ હમણાં ખુલ્લા છે.'},
+ {d:'12',m:['OCT','ઑક્ટો'],en:'Doubt clearing session on chapter notes. Bring your questions to the centre.',gu:'પ્રકરણના નોટ્સ પર શંકા નિવારણ સત્ર. તમારા પ્રશ્નો કેન્દ્ર પર લઈ આવો.'},
+ {d:'18',m:['OCT','ઑક્ટો'],en:'New JNVST practice papers are added in Entrance exams.',gu:'પ્રવેશ પરીક્ષાઓમાં JNVST ના નવા પ્રેક્ટિસ પેપર ઉમેર્યા છે.'}
+];
+/* ---------- Gujarati content ---------- */
+var GU_SUBJ={m:'ગણિત',s:'વિજ્ઞાન',e:'અંગ્રેજી',ss:'સામાજિક વિજ્ઞાન',p:'ભૌતિકશાસ્ત્ર',c:'રસાયણશાસ્ત્ર'};
+/* GU_CH[class][subject] = [[title or null (keep English), summary], ...] in the same order as CH */
+var GU_CH={
+6:{m:[["આપણી સંખ્યાઓને જાણીએ","મોટી સંખ્યાઓની સ્થાનકિંમત, સરખામણી અને આશરે કિંમત, તથા ભારતીય અને આંતરરાષ્ટ્રીય પદ્ધતિમાં સંખ્યાઓ વાંચવી."],["પૂર્ણ સંખ્યાઓ","સંખ્યારેખા, પછીની અને પહેલાંની સંખ્યા, તથા ક્રમનો, જૂથનો અને વિભાજનનો ગુણધર્મ."],["સંખ્યાઓ સાથે રમત","અવયવ, ગુણક, અવિભાજ્ય અને વિભાજ્ય સંખ્યાઓ, વિભાજ્યતાની કસોટી, ગુ.સા.અ. અને લ.સા.અ."]],
+ s:[["ખોરાક: તે ક્યાંથી મળે છે?","ખોરાકના વનસ્પતિ અને પ્રાણી સ્ત્રોતો, છોડના ખાવાલાયક ભાગો, અને શાકાહારી, માંસાહારી તથા સર્વાહારી પ્રાણીઓ શું ખાય છે."],["ખોરાકના ઘટકો","કાર્બોહાઇડ્રેટ, પ્રોટીન, ચરબી, વિટામિન અને ખનિજો, સંતુલિત આહાર અને ઉણપથી થતા રોગો."],["રેસાથી કાપડ સુધી","કપાસ અને શણ જેવા કુદરતી રેસા, કાંતવું, વણવું અને ગૂંથવું."]],
+ e:[[null,"બે પક્ષીઓની વાર્તા પરથી ગદ્ય સમજ, શબ્દભંડોળ અને વાક્યરચના પર ભાર સાથે."],[null,"નામ અને સર્વનામના પ્રકારો, અને વાક્યોમાં તેનો સાચો ઉપયોગ."],[null,"અનૌપચારિક પત્રનું માળખું: સરનામું, સંબોધન, મુખ્ય ભાગ અને સમાપન."]],
+ ss:[["શું, ક્યાં, કેવી રીતે અને ક્યારે?","ઇતિહાસકારો હસ્તપ્રતો, શિલાલેખો અને ઓજારો જેવા સ્ત્રોતોથી ભૂતકાળનો અભ્યાસ કેવી રીતે કરે છે."],["ગોળો: અક્ષાંશ અને રેખાંશ","વિષુવવૃત્ત, કર્કવૃત્ત-મકરવૃત્ત, મુખ્ય રેખાંશવૃત્ત અને સ્થળ શોધવાની રીત."],["વિવિધતા અને ભેદભાવ","ભારતની વિવિધતા સમજવી અને રોજિંદા જીવનમાં સમાનતા કેમ મહત્વની છે."]]},
+7:{m:[["પૂર્ણાંક સંખ્યાઓ","પૂર્ણાંકોના સરવાળા, બાદબાકી, ગુણાકાર અને ભાગાકાર, તથા સંખ્યારેખા પર તેના ગુણધર્મો."],["અપૂર્ણાંક અને દશાંશ","અપૂર્ણાંક અને દશાંશ પરની ક્રિયાઓ, અને એકમાંથી બીજામાં ફેરવવું."],["સાદાં સમીકરણો","એક ચલવાળાં સમીકરણો બનાવવાં અને ઉકેલવાં, તથા તેના પર આધારિત શાબ્દિક દાખલા."]],
+ s:[["વનસ્પતિમાં પોષણ","પ્રકાશસંશ્લેષણ, અને પરોપજીવી તથા કીટભક્ષી જેવી વનસ્પતિઓની પોષણની રીતો."],["એસિડ, બેઇઝ અને ક્ષાર","સૂચકો, તટસ્થીકરણ અને એસિડ-બેઇઝના રોજિંદા ઉપયોગ."],["ઉષ્મા","તાપમાન, થર્મોમીટર, વહન, સંવહન અને વિકિરણ."]],
+ e:[[null,"ટૂંકી વાર્તા દ્વારા મૂલ્યો અને નિર્ણય લેવા પર સમજ અને ચર્ચા."],[null,"વર્તમાન, ભૂતકાળ અને ભવિષ્યકાળના સાદા, ચાલુ અને પૂર્ણ રૂપો."],[null,"શાળાની નોટિસનું માળખું અને ભાષા."]],
+ ss:[["હજાર વર્ષના બદલાવનો અભ્યાસ","નવા અને જૂના શબ્દો, ઇતિહાસકારો અને ઈ.સ. 700 થી 1750 ના તેમના સ્ત્રોતો."],["આપણી બદલાતી પૃથ્વી","પૃથ્વીનું અંતરંગ, ખડકો, ભૂકંપ અને જ્વાળામુખી."],["સમાનતા વિશે","ભારતીય લોકશાહીમાં સમાનતા અને અસમાનતાનો પ્રશ્ન."]]},
+8:{m:[["સંમેય સંખ્યાઓ","સંમેય સંખ્યાઓના ગુણધર્મો, સંખ્યારેખા પર નિરૂપણ અને તેના પરની ક્રિયાઓ."],["વર્ગ અને વર્ગમૂળ","પૂર્ણ વર્ગ, પેટર્ન, અવયવીકરણ અને ભાગાકારની રીતથી વર્ગમૂળ શોધવું."],["બીજગણિતીય પદાવલિઓ અને નિત્યસમ","પદ, એકપદી, દ્વિપદી અને (a+b)² જેવાં પ્રમાણિત નિત્યસમ."]],
+ s:[["પાક ઉત્પાદન અને વ્યવસ્થાપન","જમીન તૈયાર કરવાથી લણણી અને સંગ્રહ સુધીની ખેતીની પદ્ધતિઓ."],["બળ અને દબાણ","સંપર્ક અને બિનસંપર્ક બળ, પ્રવાહી અને વાયુમાં દબાણ, વાતાવરણનું દબાણ."],["કોલસો અને પેટ્રોલિયમ","અશ્મિભૂત બળતણ, તેની રચના, તેની બનાવટો અને સંરક્ષણની જરૂરિયાત."]],
+ e:[[null,"યુદ્ધ અને માનવતાના વિષય પર પત્ર આધારિત વાર્તાની ગદ્ય સમજ."],[null,"કર્તરિ અને કર્મણિ વાક્યો વચ્ચે રૂપાંતર."],[null,"સાચા કાળ અને સર્વનામના ફેરફાર સાથે પ્રત્યક્ષ કથનને પરોક્ષ કથનમાં ફેરવવું."]],
+ ss:[["કેવી રીતે, ક્યારે અને ક્યાં","વસાહતી શાસન, કાળવિભાજનનો ખ્યાલ અને અંગ્રેજોએ માહિતી કેવી રીતે એકઠી કરી."],["સંસાધનો","કુદરતી અને માનવસર્જિત સંસાધનો તથા ટકાઉ વિકાસ."],["ભારતનું બંધારણ","મુખ્ય લક્ષણો, મૂળભૂત અધિકારો અને બંધારણની જરૂરિયાત."]]},
+9:{m:[["સંખ્યા પદ્ધતિ","સંમેય અને અસંમેય સંખ્યાઓ, સંખ્યારેખા પર વાસ્તવિક સંખ્યાઓ અને ઘાતાંકના નિયમો."],["બહુપદીઓ","બહુપદીનાં શૂન્યો, શેષ પ્રમેય, અવયવીકરણ અને બીજગણિતીય નિત્યસમ."],["ત્રિકોણ","એકરૂપતાના નિયમો, ત્રિકોણના ગુણધર્મો અને ત્રિકોણમાં અસમતાઓ."]],
+ s:[["આપણી આસપાસનાં દ્રવ્યો","દ્રવ્યની અવસ્થાઓ, બાષ્પીભવન, ગુપ્ત ઉષ્મા અને તાપમાન-દબાણની અસર."],["ગતિ","અંતર, સ્થાનાંતર, ઝડપ, વેગ, પ્રવેગ અને ગતિનાં સમીકરણો."],["સજીવનો મૂળભૂત એકમ","કોષની રચના, કોષ-અંગિકાઓ અને વનસ્પતિ તથા પ્રાણી કોષ વચ્ચેનો તફાવત."]],
+ e:[[null,"ભવિષ્યની શાળા વિશેની વાર્તા પર સમજ, શબ્દભંડોળ અને લેખન કાર્ય."],[null,"કાળ અને મોડલ ક્રિયાપદોનો બોલવા-લખવામાં સાચો ઉપયોગ."],[null,"અંગત ડાયરી લેખનનું માળખું અને શૈલી."]],
+ ss:[["ફ્રેંચ ક્રાંતિ","1789 માં ફ્રાન્સમાં થયેલી ક્રાંતિનાં કારણો, મુખ્ય ઘટનાઓ અને અસર."],["ભારત: કદ અને સ્થાન","સ્થાન, પડોશી દેશો, પ્રમાણ રેખાંશ અને ભારતના સ્થાનનું મહત્વ."],["લોકશાહી એટલે શું? શા માટે લોકશાહી?","લોકશાહીનાં લક્ષણો અને તેના પક્ષ-વિપક્ષની દલીલો."]]},
+10:{m:[["વાસ્તવિક સંખ્યાઓ","યુક્લિડનું ભાગાકાર પ્રમેય, અંકગણિતનું મૂળભૂત પ્રમેય અને અસંમેય સંખ્યાઓ."],["દ્વિઘાત સમીકરણો","અવયવીકરણ, પૂર્ણ વર્ગ બનાવીને અને સૂત્ર દ્વારા ઉકેલ, તથા ઉકેલોનું સ્વરૂપ."],["ત્રિકોણમિતિ","ત્રિકોણમિતીય ગુણોત્તરો, નિત્યસમ અને ઊંચાઈ-અંતરના દાખલા."]],
+ s:[["રાસાયણિક પ્રક્રિયાઓ અને સમીકરણો","સમીકરણ સંતુલિત કરવું, પ્રક્રિયાના પ્રકારો, ઓક્સિડેશન-રિડક્શન અને ક્ષારણ."],["વિદ્યુત","પ્રવાહ, વિદ્યુતસ્થિતિમાન તફાવત, ઓહ્મનો નિયમ, અવરોધ અને વિદ્યુત પાવર."],["જીવન પ્રક્રિયાઓ","સજીવોમાં પોષણ, શ્વસન, વહન અને ઉત્સર્જન."]],
+ e:[[null,"શ્રદ્ધા વિશેની વાર્તાની સમજ, વિષય અને પાત્ર પરના પ્રશ્નો સાથે."],[null,"પ્રત્યક્ષ-પરોક્ષ કથનની પુનરાવર્તના અને પરીક્ષામાં પુછાતા કાળના નિયમો."],[null,"ફરિયાદ, અરજી અને પૂછપરછના ઔપચારિક પત્રનું માળખું."]],
+ ss:[["યુરોપમાં રાષ્ટ્રવાદનો ઉદય","ફ્રેંચ ક્રાંતિની અસર, જર્મની અને ઇટાલીનું એકીકરણ અને રાષ્ટ્રવાદ."],["સંસાધનો અને વિકાસ","સંસાધનોના પ્રકારો, જમીનનો ઉપયોગ, જમીનના પ્રકારો અને ભારતમાં સંસાધન આયોજન."],["સત્તાની વહેંચણી","બેલ્જિયમ અને શ્રીલંકાનાં ઉદાહરણો, લોકશાહીમાં સત્તાની વહેંચણીના સ્વરૂપો."]]},
+11:{p:[["એકમો અને માપન","SI એકમો, પરિમાણો, સાર્થક અંકો અને માપનમાં ભૂલો."],["સુરેખ ગતિ","સ્થાન, વેગ, પ્રવેગ, અને નિયમિત પ્રવેગી ગતિના આલેખ."],["ગતિના નિયમો","ન્યૂટનના ત્રણ નિયમો, વેગમાન, ઘર્ષણ અને વર્તુળાકાર ગતિની પ્રાથમિક સમજ."]],
+ c:[["રસાયણશાસ્ત્રના કેટલાક મૂળભૂત ખ્યાલો","મોલ ખ્યાલ, રસાયણ માપનશાસ્ત્ર, રાસાયણિક સંયોજનના નિયમો અને સીમિત પ્રક્રિયક."],["પરમાણુનું બંધારણ","પરમાણ્વીય નમૂનાઓ, ક્વૉન્ટમ આંક, કક્ષકો અને ઇલેક્ટ્રૉન રચના."],["રાસાયણિક બંધન","આયનિક અને સહસંયોજક બંધ, VSEPR સિદ્ધાંત, સંકરણ અને આણ્વીય કક્ષક સિદ્ધાંત."]],
+ m:[["ગણ","ગણના પ્રકારો, ઉપગણ, વેન આકૃતિઓ અને ગણ પરની ક્રિયાઓ."],["ત્રિકોણમિતીય વિધેયો","રેડિયન માપ, ત્રિકોણમિતીય વિધેયો અને નિત્યસમ, અને તેમના આલેખ."],["લક્ષ અને વિકલિત","લક્ષ અને વિકલિતનો સાહજિક ખ્યાલ, વિકલનના નિયમો સાથે."]],
+ e:[[null,"દાદીમા વિશેના સંસ્મરણની વાંચન-સમજ, મૂલ્ય આધારિત પ્રશ્નો સાથે."],[null,"અપઠિત ફકરા, અનુમાન અને સંદર્ભ પરથી શબ્દાર્થ માટેની રીતો."],[null,"બોર્ડ પરીક્ષા માટે લેખ અને નિબંધનું માળખું, સૂર અને પદ્ધતિ."]]},
+12:{p:[["વિદ્યુતભાર અને ક્ષેત્રો","કુલંબનો નિયમ, વિદ્યુતક્ષેત્ર, ક્ષેત્રરેખાઓ અને ગૉસનું પ્રમેય."],["પ્રવાહ વિદ્યુત","ડ્રિફ્ટ વેગ, ઓહ્મનો નિયમ, કિર્ખોફના નિયમો અને વ્હીટસ્ટોન બ્રિજ."],["કિરણ પ્રકાશશાસ્ત્ર","પરાવર્તન, વક્રીભવન, લેન્સ, અરીસા અને પ્રકાશીય સાધનો."]],
+ c:[["દ્રાવણો","સાંદ્રતાના માપ, અણુસંખ્યા આધારિત ગુણધર્મો અને રાઉલ્ટનો નિયમ."],["વિદ્યુતરસાયણ","વિદ્યુતરાસાયણિક કોષો, નર્ન્સ્ટ સમીકરણ, વાહકતા અને વિદ્યુતવિભાજન."],["હેલોઆલ્કેન અને હેલોએરીન","નામકરણ, બનાવટ અને SN1 તથા SN2 ક્રિયાવિધિ સહિતની પ્રક્રિયાઓ."]],
+ m:[["સંબંધો અને વિધેયો","સંબંધો અને વિધેયોના પ્રકારો, એક-એક અને વ્યાપ્ત વિધેયો, અને સંયોજિત વિધેય."],["સંકલન","વિકલનના વિપરીત તરીકે સંકલન, પદ્ધતિઓ અને નિશ્ચિત સંકલન."],["સંભાવના","શરતી સંભાવના, બેયસ પ્રમેય અને યાદૃચ્છિક ચલ."]],
+ e:[[null,"ભાષા અને ઓળખ વિશેની વાર્તાની સમજ અને વિષય વિશ્લેષણ."],[null,"બાળમજૂરી વિશેનો ગદ્યખંડ વાંચવો અને અનુમાન આધારિત પ્રશ્નોના જવાબ આપવા."],[null,"બોર્ડ પરીક્ષાના લેખન કાર્ય માટેનું માળખું અને ભાષા."]]}
+};
+/* GU_Q[class-subject] = [[question, options or 0 (same options as English)], ...]. English subject quizzes stay in English. */
+var GU_Q={
+'6-m':[["સૌથી નાની અવિભાજ્ય સંખ્યા કઈ છે?",0],["100 નો 3/4 ભાગ કેટલો થાય?",0],["4 અને 6 નો લ.સા.અ. કેટલો થાય?",0]],
+'6-s':[["આમાંથી પ્રકાશનો સ્ત્રોત કયો છે?",["ચંદ્ર","સૂર્ય","અરીસો","પુસ્તક"]],["છોડ કઈ પ્રક્રિયાથી પોતાનો ખોરાક બનાવે છે?",["શ્વસન","પાચન","પ્રકાશસંશ્લેષણ","બાષ્પીભવન"]],["દરિયાની સપાટીએ શુદ્ધ પાણી કયા તાપમાને ઉકળે છે?",0]],
+'6-ss':[["ભારતની રાજધાની કઈ છે?",["મુંબઈ","નવી દિલ્હી","કોલકાતા","ચેન્નઈ"]],["સૌથી મોટો ખંડ કયો છે?",["આફ્રિકા","યુરોપ","એશિયા","ઑસ્ટ્રેલિયા"]],["0° અક્ષાંશની રેખાને શું કહેવાય છે?",["મુખ્ય રેખાંશવૃત્ત","વિષુવવૃત્ત","કર્કવૃત્ત","આર્કટિક વૃત્ત"]]],
+'7-m':[["(-3) + (-5) = ?",0],["5 સેમી બાજુવાળા ચોરસની પરિમિતિ કેટલી?",["10 સેમી","15 સેમી","20 સેમી","25 સેમી"]],["2³ ની કિંમત કેટલી?",0]],
+'7-s':[["એસિડ વાદળી લિટમસ પેપરને કયો રંગ આપે છે?",["લાલ","લીલો","પીળો","સફેદ"]],["ઉષ્મા ઊર્જાનો SI એકમ કયો છે?",["વૉટ","જૂલ","ન્યૂટન","પાસ્કલ"]],["પ્રકાશસંશ્લેષણ માટે છોડ કયો વાયુ લે છે?",["ઑક્સિજન","નાઇટ્રોજન","કાર્બન ડાયોક્સાઇડ","હાઇડ્રોજન"]]],
+'7-ss':[["તાજમહેલ કોણે બંધાવ્યો?",["અકબર","બાબર","શાહજહાં","ઔરંગઝેબ"]],["ભારતની સૌથી લાંબી નદી કઈ છે?",["યમુના","ગંગા","ગોદાવરી","નર્મદા"]],["બંધારણ સભાની મુસદ્દા સમિતિના અધ્યક્ષ કોણ હતા?",["નહેરુ","ગાંધીજી","ડૉ. બી. આર. આંબેડકર","પટેલ"]]],
+'8-m':[["144 નું વર્ગમૂળ કેટલું?",0],["(a + b)² બરાબર શું થાય?",0],["3 નો ઘન કેટલો થાય?",0]],
+'8-s':[["બળનો SI એકમ કયો છે?",["જૂલ","ન્યૂટન","વૉટ","પાસ્કલ"]],["આમાંથી અધાતુ કઈ છે?",["લોખંડ","તાંબુ","ગંધક","જસત"]],["દબાણ બરાબર શું થાય?",["બળ × ક્ષેત્રફળ","બળ / ક્ષેત્રફળ","ક્ષેત્રફળ / બળ","દળ / કદ"]]],
+'8-ss':[["પ્લાસીનું યુદ્ધ ક્યારે થયું?",0],["ભારતની સંસદનાં બે ગૃહ લોકસભા અને કયું?",["વિધાનસભા","રાજ્યસભા","ગ્રામસભા","લોક અદાલત"]],["બંધારણમાં કેટલા મૂળભૂત અધિકારો છે?",["ચાર","પાંચ","છ","સાત"]]],
+'9-m':[["ત્રિકોણના ખૂણાઓનો સરવાળો કેટલો?",0],["બહુપદી x - 3 નું શૂન્ય કયું?",0],["આમાંથી અસંમેય સંખ્યા કઈ છે?",0]],
+'9-s':[["ન્યૂટનનો પ્રથમ નિયમ કયા નિયમ તરીકે પણ ઓળખાય છે?",["ગુરુત્વાકર્ષણ","જડત્વ","ક્રિયા","ઊર્જા"]],["કાર્બનનો પરમાણુક્રમાંક કેટલો છે?",0],["ઝડપ બરાબર શું થાય?",["અંતર × સમય","અંતર / સમય","સમય / અંતર","દળ × વેગ"]]],
+'9-ss':[["ફ્રેંચ ક્રાંતિ ક્યારે શરૂ થઈ?",0],["લોકશાહી એટલે કોનું શાસન?",["રાજાનું","સેનાનું","લોકોનું","ધનવાનોનું"]],["ભારત કયા ગોળાર્ધોમાં આવેલું છે?",["ઉત્તર અને પૂર્વ","દક્ષિણ અને પશ્ચિમ","ઉત્તર અને પશ્ચિમ","દક્ષિણ અને પૂર્વ"]]],
+'10-m':[["ax² + bx + c = 0 નો વિવેચક કયો છે?",0],["sin 30° = ?",0],["બે સંખ્યાઓના ગુ.સા.અ. × લ.સા.અ. બરાબર શું થાય?",["તેમનો સરવાળો","તેમનો તફાવત","તેમનો ગુણાકાર","તેમનો ગુણોત્તર"]]],
+'10-s':[["ખાવાના સોડાનું રાસાયણિક સૂત્ર કયું છે?",0],["માયોપિયા (ટૂંકી દૃષ્ટિ) કયા લેન્સથી સુધારાય છે?",["બહિર્ગોળ લેન્સ","અંતર્ગોળ લેન્સ","સમતલ અરીસો","પ્રિઝમ"]],["ઓહ્મનો નિયમ કયો છે?",0]],
+'10-ss':[["1930 માં દાંડીકૂચનું નેતૃત્વ કોણે કર્યું?",["સુભાષ બોઝ","નહેરુ","મહાત્મા ગાંધી","પટેલ"]],["કર્કવૃત્ત કયા રાજ્યમાંથી પસાર થાય છે?",["કેરળ","ગુજરાત","પંજાબ","આસામ"]],["ખેતી કયા ક્ષેત્રમાં આવે છે?",["પ્રાથમિક","દ્વિતીય","તૃતીય","ચતુર્થ"]]],
+'11-p':[["વેગમાનનો SI એકમ કયો છે?",0],["બળનું પરિમાણ સૂત્ર કયું છે?",0],["પૃથ્વી પર ગુરુત્વપ્રવેગ લગભગ કેટલો છે?",0]],
+'11-c':[["સોડિયમનો પરમાણુક્રમાંક કેટલો છે?",0],["એવોગેડ્રો સંખ્યા લગભગ કેટલી છે?",0],["25 °C એ શુદ્ધ પાણીનું pH કેટલું હોય?",0]],
+'11-m':[["3 ઘટકોવાળા ગણના કુલ કેટલા ઉપગણ બને?",0],["sin²θ + cos²θ બરાબર શું થાય?",0],["log₁₀ 100 = ?",0]],
+'12-p':[["સંધારકતા (કેપેસિટન્સ) નો SI એકમ કયો છે?",["હેન્રી","ફેરાડ","ટેસ્લા","વેબર"]],["શૂન્યાવકાશમાં પ્રકાશની ઝડપ લગભગ કેટલી છે?",0],["લેન્સની પાવરનો SI એકમ કયો છે?",["મીટર","ડાયૉપ્ટર","વૉટ","લ્યુમેન"]]],
+'12-c':[["આમાંથી આલ્કલી ધાતુ કઈ છે?",["કૅલ્શિયમ","પોટૅશિયમ","ઍલ્યુમિનિયમ","લોખંડ"]],["મોલારિટીનો એકમ કયો છે?",0],["મિથેનમાં કાર્બનનું સંકરણ કયું છે?",0]],
+'12-m':[["d/dx (sin x) = ?",0],["∫ (1/x) dx = ?",0],["2×2 એકમ શ્રેણિકનો નિશ્ચાયક કેટલો થાય?",0]]
+};
+/* ---------- State ---------- */
+var S={ex:{},user:null,screen:'login',tab:'home',step:'phone',phone:'',sentOtp:'',err:'',subj:null,chapter:null,test:null,results:[],toast:'',lang:'en',pdf:null,keepScroll:null,draftName:'',draftCls:null};
+function L(en,gu){return S.lang==='gu'?gu:en;}
+function load(){try{
+  var l=localStorage.getItem('vp_lang');
+  if(l==='gu'||l==='en')S.lang=l;else if(/^gu/i.test(navigator.language||''))S.lang='gu';
+  var u=localStorage.getItem('vp_user');if(u){S.user=JSON.parse(u);S.screen='main';}
+  var r=localStorage.getItem('vp_results');if(r)S.results=JSON.parse(r);
+}catch(e){}}
+function save(){try{localStorage.setItem('vp_user',JSON.stringify(S.user));localStorage.setItem('vp_results',JSON.stringify(S.results));}catch(e){}}
+function saveLang(){try{localStorage.setItem('vp_lang',S.lang);}catch(e){}}
+function clearSaved(){try{localStorage.removeItem('vp_user');localStorage.removeItem('vp_results');}catch(e){}}
+function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function toast(m){S.toast=m;render();setTimeout(function(){S.toast='';render();},1800);}
+
+/* ---------- Text helpers ---------- */
+function sn(k){return S.lang==='gu'?GU_SUBJ[k]:SUBJ[k].n;}
+function isExam(u){return !!u&&(u.cls==='jnvst'||u.cls==='cet');}
+function parseTrack(v){return (v==='jnvst'||v==='cet')?v:+v;}
+function clsName(c){return (c==='jnvst'||c==='cet')?EXN[c]:L('Class '+c,'ધોરણ '+c);}
+function trackSeg(action,current){
+  var s='';
+  for(var c=6;c<=10;c++)s+='<button type="button" data-act="'+action+'" data-v="'+c+'" aria-pressed="'+(current===c)+'">'+clsName(c)+'</button>';
+  ['jnvst','cet'].forEach(function(x){s+='<button type="button" data-act="'+action+'" data-v="'+x+'" aria-pressed="'+(current===x)+'">'+EXN[x]+'</button>';});
+  return s;
+}
+function chInfo(c,k,i){var b=CH[c][k][i],g=S.lang==='gu'&&GU_CH[c]&&GU_CH[c][k]&&GU_CH[c][k][i];return g?[g[0]||b[0],g[1]]:[b[0],b[1]];}
+function classQs(key){
+  var base=TEST[key]||[],g=S.lang==='gu'&&GU_Q[key];
+  if(!g)return base;
+  return base.map(function(q,i){var t=g[i];return t?Q(t[0],t[1]||q.o,q.a):q;});
+}
+function exF(ex){return ex==='jnvst'?L('Jawahar Navodaya Vidyalaya Selection Test','જવાહર નવોદય વિદ્યાલય પસંદગી કસોટી'):L('Common Entrance Test','કૉમન એન્ટ્રન્સ ટેસ્ટ');}
+function medName(m){return m==='gu'?L('Gujarati','ગુજરાતી'):L('English','અંગ્રેજી');}
+function medLong(m){return m==='gu'?L('Gujarati medium','ગુજરાતી માધ્યમ'):L('English medium','અંગ્રેજી માધ્યમ');}
+function ttl(m){
+  if(m.x)return EXN[m.x]+' · '+EXS[m.k][S.lang]+' · '+medLong(m.m);
+  return sn(m.k)+' · '+clsName(m.c);
+}
+function resTitle(r){return r.meta?ttl(r.meta):(r.title||'');}
+function fmtDate(r){
+  try{if(r.ts)return new Date(r.ts).toLocaleDateString(S.lang==='gu'?'gu-IN':'en-IN',{day:'numeric',month:'short',year:'numeric'});}catch(e){}
+  return r.date||'';
+}
+function curMed(){return (S.user&&S.user.med)||S.lang;}
+function errText(){
+  var e=S.err;
+  return e==='phone'?L('Enter a valid 10 digit mobile number (starting with 6 to 9).','સાચો 10 અંકનો મોબાઇલ નંબર નાખો (6 થી 9 થી શરૂ થતો).')
+   :e==='otp'?L('Wrong OTP. Please try again.','OTP ખોટો છે. ફરી પ્રયત્ન કરો.')
+   :e==='name'?L('Please enter your name.','તમારું નામ લખો.')
+   :e==='cls'?L('Please select your class or exam.','ધોરણ અથવા પરીક્ષા પસંદ કરો.'):'';
+}
+
+/* ---------- Views ---------- */
+var ICON={
+home:'<svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>',
+study:'<svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 012-2h13v16H6a2 2 0 00-2 2z"/><path d="M4 19V5"/><path d="M9 8h6"/></svg>',
+tests:'<svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>',
+me:'<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>',
+about:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6"/><path d="M12 7.5v.01"/></svg>'};
+
+function langSeg(){
+  return '<div class="field"><label>Language / ભાષા</label><div class="seg" role="group" aria-label="Language">'+['en','gu'].map(function(x){return '<button type="button" data-act="lang" data-v="'+x+'" aria-pressed="'+(S.lang===x)+'">'+(x==='en'?'English':'ગુજરાતી')+'</button>';}).join('')+'</div></div>';
+}
+function brandMark(tag){return '<'+tag+' class="brand"><img src="'+LOGO+'" alt="">SAHAJ ACADEMY</'+tag+'>';}
+
+function viewLogin(){
+  var body,err=errText();
+  if(S.step==='phone'){
+    body='<form id="f-phone"><div class="field"><label for="mob">'+L('Mobile number','મોબાઇલ નંબર')+'</label><div class="phone"><span class="cc">+91</span><input class="input" id="mob" inputmode="numeric" maxlength="10" autocomplete="tel-national" placeholder="'+L('10 digit number','10 અંકનો નંબર')+'" value="'+esc(S.phone)+'"></div></div><p class="err" id="err">'+err+'</p><button class="btn" type="submit">'+L('Send OTP','OTP મોકલો')+'</button><p class="muted" style="margin:0">'+L('No password needed. Log in with just your mobile number and OTP.','પાસવર્ડની જરૂર નથી. ફક્ત મોબાઇલ નંબર અને OTP થી લૉગિન કરો.')+'</p></form>';
+  } else if(S.step==='otp'){
+    var boxes='';for(var i=0;i<6;i++)boxes+='<input class="input" id="o'+i+'" inputmode="numeric" maxlength="1" aria-label="OTP '+(i+1)+'">';
+    body='<form id="f-otp"><div class="field"><label>'+L('OTP sent to +91 ','OTP મોકલ્યો: +91 ')+esc(S.phone)+'</label><div class="otp">'+boxes+'</div></div><div class="note">'+L('Demo app: no real SMS is sent. Enter OTP ','ડેમો એપ: અસલી SMS જતો નથી. ચકાસવા માટે OTP ')+'<b>'+esc(S.sentOtp)+'</b>'+L(' to test.',' નાખો.')+'</div><p class="err" id="err">'+err+'</p><button class="btn" type="submit">'+L('Verify and log in','ચકાસો અને લૉગિન કરો')+'</button><button class="btn alt" type="button" data-act="changenum">'+L('Change number','નંબર બદલો')+'</button></form>';
+  } else {
+    var seg=trackSeg('pickcls',S.draftCls);
+    body='<form id="f-setup"><div class="field"><label for="nm">'+L('Your name','તમારું નામ')+'</label><input class="input" id="nm" autocomplete="name" placeholder="'+L('Student name','વિદ્યાર્થીનું નામ')+'" value="'+esc(S.draftName||'')+'"></div><div class="field"><label>'+L('Class or exam','ધોરણ અથવા પરીક્ષા')+'</label><div class="seg">'+seg+'</div></div><p class="err" id="err">'+err+'</p><button class="btn" type="submit">'+L('Start learning','ભણવાનું શરૂ કરો')+'</button></form>';
+  }
+  var head=S.step==='setup'?L('One last step','બસ, એક છેલ્લું પગલું'):L('Start learning','ભણતર શરૂ કરો');
+  var sub=S.step==='setup'?L('Choose your name and class.','તમારું નામ અને ધોરણ પસંદ કરો.'):L('Study material, quizzes and practice papers for Classes 6 to 10, JNVST and CET, all in one place.','ધોરણ 6 થી 10, JNVST અને CET નું સ્ટડી મટીરીયલ, ક્વિઝ અને પ્રેક્ટિસ પેપર, એક જ જગ્યાએ.');
+  return '<div class="login"><div class="hero">'+brandMark('div')+'<h1>'+head+'</h1><p>'+sub+'</p></div><div class="langwrap">'+langSeg()+'</div>'+body+'</div>';
+}
+
+function bar(title,back){return '<div class="bar"><button data-act="'+back+'" aria-label="'+L('Back','પાછળ')+'">&#8592;</button><h2>'+esc(title)+'</h2></div>';}
+
+function resultRow(r){
+  var p=Math.round(r.score*100/r.total);
+  return '<div class="card item"><span class="num">'+r.score+'/'+r.total+'</span><span class="grow"><b>'+esc(resTitle(r))+'</b><small class="muted">'+esc(fmtDate(r))+'</small></span><span class="pill '+(p>=60?'good':'bad')+'">'+p+'%</span></div>';
+}
+function subjCards(layout){
+  var u=S.user;
+  return subjectsFor(u.cls).map(function(k){
+    var n=CH[u.cls][k].length;
+    if(layout==='grid')return '<button class="card subj" data-act="subject" data-v="'+k+'"><span class="badge" style="background:'+SUBJ[k].c+'">'+SUBJ[k].b+'</span><b>'+esc(sn(k))+'</b><small>'+n+L(' chapters',' પ્રકરણો')+'</small></button>';
+    return '<button class="card item" data-act="subject" data-v="'+k+'"><span class="badge" style="background:'+SUBJ[k].c+'">'+SUBJ[k].b+'</span><span class="grow"><b>'+esc(sn(k))+'</b><small class="muted">'+n+L(' chapters · notes',' પ્રકરણો · નોટ્સ')+'</small></span><span class="arrow">&#8250;</span></button>';
+  }).join('');
+}
+function exCards(){
+  return ['jnvst','cet'].map(function(k){
+    return '<button class="card item" data-act="exam" data-v="'+k+'"><span class="badge w" style="background:'+EXC[k]+'">'+EXN[k]+'</span><span class="grow"><b>'+exF(k)+'</b><small class="muted">'+L('4 subjects and practice tests · Gujarati and English medium','4 વિષયો અને પ્રેક્ટિસ ટેસ્ટ · ગુજરાતી અને અંગ્રેજી માધ્યમ')+'</small></span><span class="arrow">&#8250;</span></button>';
+  }).join('');
+}
+
+function viewHome(){
+  var u=S.user;
+  var last=S.results.slice(-2).reverse().map(resultRow).join('')||'<div class="card muted">'+L('No tests taken yet. Start your first test from the Tests tab.','હજી કોઈ ટેસ્ટ આપી નથી. ટેસ્ટ ટૅબમાંથી પહેલી ટેસ્ટ શરૂ કરો.')+'</div>';
+  var nt=NOTICES.map(function(n){return '<div class="card notice"><span class="d">'+n.d+'<br>'+n.m[S.lang==='gu'?1:0]+'</span><span>'+esc(n[S.lang])+'</span></div>';}).join('');
+  var first=u.name.split(' ')[0];
+  return '<div class="top"><div class="row">'+brandMark('span')+'<span class="chip">'+clsName(u.cls)+'</span></div><h1>'+L('Hello, ','નમસ્તે, ')+esc(first)+'</h1><p>'+L('What would you like to study today?','આજે શું ભણવું છે?')+'</p></div><div class="scroll">'+(isExam(u)?examHomeBody(u.cls):'<div class="sec"><h2>'+L('Your subjects','તમારા વિષયો')+'</h2><div class="grid2">'+subjCards('grid')+'</div></div><div class="sec"><h2>'+L('Entrance exams','પ્રવેશ પરીક્ષાઓ')+'</h2><div class="list">'+exCards()+'</div></div>')+'<div class="sec"><div class="sub"><h2>'+L('Recent results','તાજેતરના પરિણામો')+'</h2><button class="link" data-act="tab" data-v="me">'+L('View all','બધા જુઓ')+'</button></div><div class="list">'+last+'</div></div><div class="sec"><h2>'+L('Notice board','સૂચના પાટિયું')+'</h2><div class="list">'+nt+'</div></div></div>';
+}
+
+function viewStudy(){
+  var u=S.user;
+  return '<div class="top"><h1>'+L('Study material','સ્ટડી મટીરીયલ')+'</h1><p>'+clsName(u.cls)+' &middot; '+(isExam(u)?L('subject wise PDFs','વિષય મુજબ PDF'):L('chapter wise notes','પ્રકરણ મુજબ નોટ્સ'))+'</p></div><div class="scroll">'+(isExam(u)?examHomeBody(u.cls):'<div class="sec"><div class="list">'+subjCards('list')+'</div></div><div class="sec"><h2>'+L('Entrance exams','પ્રવેશ પરીક્ષાઓ')+'</h2><div class="list">'+exCards()+'</div></div>')+'</div>';
+}
+function viewChapters(){
+  var k=S.subj,c=S.user.cls,list=CH[c][k];
+  var rows=list.map(function(_,i){var t=chInfo(c,k,i);return '<button class="card item" data-act="chapter" data-v="'+i+'"><span class="num">'+(i+1)+'</span><span class="grow"><b>'+esc(t[0])+'</b><small class="muted">'+L('Notes · PDF','નોટ્સ · PDF')+'</small></span><span class="arrow">&#8250;</span></button>';}).join('');
+  return bar(sn(k)+' · '+clsName(c),'back-study')+'<div class="scroll"><div class="sec"><div class="list">'+rows+'</div></div><div class="sec"><button class="btn" data-act="starttest" data-v="'+k+'">'+L('Take a practice test','પ્રેક્ટિસ ટેસ્ટ આપો')+'</button></div></div>';
+}
+function viewChapter(){
+  var k=S.subj,c=S.user.cls,t=chInfo(c,k,S.chapter);
+  return bar(t[0],'back-chapters')+'<div class="scroll"><div class="sec"><span class="pill" style="align-self:flex-start">'+esc(sn(k))+' &middot; '+clsName(c)+' &middot; '+L('Chapter ','પ્રકરણ ')+(S.chapter+1)+'</span></div><div class="sec prose"><h2>'+L('In this chapter','આ પ્રકરણમાં')+'</h2><p>'+esc(t[1])+'</p></div><div class="sec"><button class="btn" data-act="pdf">'+L('View notes PDF','નોટ્સ PDF જુઓ')+'</button><button class="btn alt" data-act="starttest" data-v="'+k+'">'+L("Take this subject's test",'આ વિષયની ટેસ્ટ આપો')+'</button></div></div>';
+}
+
+/* ---- Entrance exams ---- */
+function medSeg(){
+  var m=curMed();
+  return '<div class="field"><label>Medium / માધ્યમ</label><div class="seg" role="group" aria-label="Medium">'+['gu','en'].map(function(x){return '<button type="button" data-act="med" data-v="'+x+'" aria-pressed="'+(m===x)+'">'+(x==='gu'?'ગુજરાતી માધ્યમ':'English medium')+'</button>';}).join('')+'</div></div>';
+}
+function subjCount(ex,k,m){
+  var n=pdfsFor(ex,k,m).length;
+  if(k==='prac')return n?n+L(n===1?' paper':' papers',' પેપર'):L('Coming soon','જલ્દી આવશે');
+  return n+' PDF &middot; '+EXD[ex][k].q.length+L(' question quiz',' પ્રશ્નોની ક્વિઝ');
+}
+function bestFor(key){var best=0;S.results.forEach(function(r){if(r.key===key)best=Math.max(best,Math.round(r.score*100/r.total));});return best;}
+function bestPill(best){return best?'<span class="pill good">'+L('Best ','શ્રેષ્ઠ ')+best+'%</span>':'<span class="arrow">&#8250;</span>';}
+function examRows(ex){
+  var m=curMed();
+  return EXO.map(function(k){
+    return '<button class="card item" data-act="exsubj" data-v="'+k+'"><span class="badge w" style="background:'+EXS[k].c+'">'+EXS[k].b+'</span><span class="grow"><b>'+esc(EXS[k][S.lang])+'</b><small class="muted">'+subjCount(ex,k,m)+'</small></span>'+bestPill(bestFor(ex+'-'+k+'-'+m))+'</button>';
+  }).join('');
+}
+/* a student who picked JNVST or CET as their track sees that exam directly */
+function examHomeBody(ex){
+  return '<div class="sec">'+medSeg()+'</div><div class="sec"><h2>'+L('Subjects','વિષયો')+'</h2><div class="list">'+examRows(ex)+'</div></div>';
+}
+function examTestRows(ex){
+  var m=curMed();
+  var quiz=['mat','env','mth','lang'].map(function(k){
+    return '<button class="card item" data-act="exquiz" data-v="'+k+'"><span class="badge w" style="background:'+EXS[k].c+'">'+EXS[k].b+'</span><span class="grow"><b>'+esc(EXS[k][S.lang])+L(' quiz',' ક્વિઝ')+'</b><small class="muted">'+EXD[ex][k].q.length+L(' questions · MCQ',' પ્રશ્નો · MCQ')+'</small></span>'+bestPill(bestFor(ex+'-'+k+'-'+m))+'</button>';
+  }).join('');
+  var n=pdfsFor(ex,'prac',m).length;
+  return quiz+'<button class="card item" data-act="exsubj" data-v="prac"><span class="badge w" style="background:'+EXS.prac.c+'">'+EXS.prac.b+'</span><span class="grow"><b>'+esc(EXS.prac[S.lang])+'</b><small class="muted">'+subjCount(ex,'prac',m)+'</small></span><span class="arrow">&#8250;</span></button>';
+}
+function viewExam(){
+  var ex=S.ex.exam,m=curMed();
+  var rows=examRows(ex);
+  return bar(EXN[ex],'exback')+'<div class="scroll"><div class="sec"><p class="muted" style="margin:0">'+exF(ex)+'</p>'+medSeg()+'</div><div class="sec"><h2>'+L('Subjects','વિષયો')+'</h2><div class="list">'+rows+'</div></div></div>';
+}
+function pdfCard(x,m){
+  var title=(m==='gu'?(x.gu||x.en):(x.en||x.gu));
+  var tag=x.med==='both'?'':'<span class="pill">'+medName(x.med)+'</span>';
+  return '<button class="card pdf" data-act="openpdf" data-f="'+x.f+'" data-t="'+esc(title)+'"><span class="ic">PDF</span><span class="grow" style="min-width:0"><b style="display:block;font-weight:600;overflow-wrap:anywhere">'+esc(title)+'</b><small class="muted">'+x.pg+L(' pages',' પાનાં')+' &middot; '+x.mb+' MB</small></span>'+tag+'<span class="arrow">&#8250;</span></button>';
+}
+function viewExTopics(){
+  var ex=S.ex.exam,k=S.ex.subj,m=curMed(),prac=k==='prac';
+  var list=pdfsFor(ex,k,m);
+  var rows=list.length?list.map(function(x){return pdfCard(x,m);}).join(''):'<div class="card muted">'+(prac?L('Practice papers for this exam and medium will be added soon.','આ પરીક્ષા અને માધ્યમના પ્રેક્ટિસ પેપર જલ્દી ઉમેરાશે.'):L('Study material for this medium will be added soon.','આ માધ્યમનું સ્ટડી મટીરીયલ જલ્દી ઉમેરાશે.'))+'</div>';
+  var head=prac?L('Test papers','ટેસ્ટ પેપર'):L('Study material','સ્ટડી મટીરીયલ');
+  var quiz=prac?'':'<div class="sec"><h2>'+L('Quick quiz','ક્વિઝ')+'</h2><button class="btn" data-act="extest">'+L('Take a practice quiz','પ્રેક્ટિસ ક્વિઝ આપો')+'</button></div>';
+  return bar(EXS[k][S.lang]+' · '+EXN[ex],'back-exam')+'<div class="scroll"><div class="sec">'+medSeg()+'</div><div class="sec"><h2>'+head+'</h2><div class="list">'+rows+'</div></div>'+quiz+'</div>';
+}
+
+/* ---- Tests tab, quiz, result ---- */
+function viewTests(){
+  var u=S.user;
+  var rows=isExam(u)?examTestRows(u.cls):subjectsFor(u.cls).map(function(k){
+    var key=u.cls+'-'+k,n=(TEST[key]||[]).length,best=0;
+    S.results.forEach(function(r){if(r.key===key)best=Math.max(best,Math.round(r.score*100/r.total));});
+    return '<button class="card item" data-act="starttest" data-v="'+k+'"><span class="badge" style="background:'+SUBJ[k].c+'">'+SUBJ[k].b+'</span><span class="grow"><b>'+esc(sn(k))+L(' test paper',' ટેસ્ટ પેપર')+'</b><small class="muted">'+n+L(' questions · MCQ',' પ્રશ્નો · MCQ')+'</small></span>'+(best?'<span class="pill good">'+L('Best ','શ્રેષ્ઠ ')+best+'%</span>':'<span class="arrow">&#8250;</span>')+'</button>';
+  }).join('');
+  return '<div class="top"><h1>'+L('Test papers','ટેસ્ટ પેપર')+'</h1><p>'+clsName(u.cls)+' &middot; '+L('MCQ questions in every test','દરેક ટેસ્ટમાં MCQ પ્રશ્નો')+'</p></div><div class="scroll">'+(isExam(u)?'<div class="sec">'+medSeg()+'</div>':'')+'<div class="sec"><div class="list">'+rows+'</div></div></div>';
+}
+function viewQuiz(){
+  var t=S.test,q=t.qs[t.i],labels=['A','B','C','D'];
+  var opts=q.o.map(function(o,i){return '<button class="opt" data-act="opt" data-v="'+i+'" aria-pressed="'+(t.ans[t.i]===i)+'"><span class="l">'+labels[i]+'</span><span>'+esc(o)+'</span></button>';}).join('');
+  var last=t.i===t.qs.length-1;
+  return bar(ttl(t.meta),'quit')+'<div class="scroll"><div class="sec"><div class="muted">'+L('Question ','પ્રશ્ન ')+(t.i+1)+L(' of ',' / ')+t.qs.length+'</div><div class="prog"><i style="width:'+((t.i+1)*100/t.qs.length)+'%"></i></div></div><div class="sec"><div class="q">'+esc(q.q)+'</div><div class="list">'+opts+'</div></div><div class="sec"><button class="btn" data-act="next" '+(t.ans[t.i]==null?'disabled':'')+'>'+(last?L('Submit test','ટેસ્ટ સબમિટ કરો'):L('Next question','આગળનો પ્રશ્ન'))+'</button></div></div>';
+}
+function viewResult(){
+  var t=S.test,score=0;t.qs.forEach(function(q,i){if(t.ans[i]===q.a)score++;});
+  var p=Math.round(score*100/t.qs.length);
+  var rev=t.qs.map(function(q,i){
+    var ok=t.ans[i]===q.a,yours=t.ans[i]==null?L('Not answered','જવાબ આપ્યો નથી'):q.o[t.ans[i]];
+    return '<div class="card list" style="gap:6px"><div class="muted">'+L('Q','પ્ર.')+(i+1)+'</div><b>'+esc(q.q)+'</b><div class="opt '+(ok?'right':'wrong')+'" style="padding:9px 12px"><span>'+L('Your answer: ','તમારો જવાબ: ')+esc(yours)+'</span></div>'+(ok?'':'<div class="opt right" style="padding:9px 12px"><span>'+L('Correct answer: ','સાચો જવાબ: ')+esc(q.o[q.a])+'</span></div>')+'</div>';
+  }).join('');
+  var msg=p>=80?L('Excellent work. Keep it up.','ખૂબ સરસ. આમ જ ચાલુ રાખો.'):p>=60?L('Good effort. A little more practice will make it better.','સારો પ્રયાસ. થોડી વધુ પ્રેક્ટિસથી વધુ સારું થશે.'):L('Read the notes again and try once more.','નોટ્સ ફરી વાંચો અને ફરી પ્રયત્ન કરો.');
+  return bar(L('Result','પરિણામ'),'quit')+'<div class="scroll"><div class="card score"><span class="muted">'+esc(ttl(t.meta))+'</span><span class="big">'+score+'/'+t.qs.length+'</span><span class="pill '+(p>=60?'good':'bad')+'">'+p+'%</span><span class="muted">'+msg+'</span></div><div class="sec"><h2>'+L('Answer review','જવાબોની સમીક્ષા')+'</h2><div class="list">'+rev+'</div></div><div class="sec"><button class="btn" data-act="quit">'+L('Done','પૂર્ણ')+'</button></div></div>';
+}
+
+/* ---- Profile and About ---- */
+function viewProfile(){
+  var u=S.user,n=S.results.length;
+  var avg=n?Math.round(S.results.reduce(function(a,r){return a+r.score*100/r.total;},0)/n):0;
+  var best=n?Math.round(Math.max.apply(null,S.results.map(function(r){return r.score*100/r.total;}))):0;
+  var seg=trackSeg('setcls',u.cls);
+  var hist=S.results.slice().reverse().slice(0,8).map(resultRow).join('')||'<div class="card muted">'+L('Your results will appear here after you take a test.','ટેસ્ટ આપ્યા પછી પરિણામ અહીં દેખાશે.')+'</div>';
+  return '<div class="top"><h1>'+L('My profile','મારી પ્રોફાઇલ')+'</h1><p>'+L('Your details and progress','તમારી માહિતી અને પ્રગતિ')+'</p></div><div class="scroll"><div class="sec"><div class="card" style="display:flex;gap:14px;align-items:center"><span class="avatar">'+esc(u.name.charAt(0).toUpperCase())+'</span><span style="min-width:0"><b style="font-family:var(--f-display);font-size:18px;display:block;overflow-wrap:anywhere">'+esc(u.name)+'</b><span class="muted">'+(isExam(u)?L(EXN[u.cls]+' student',EXN[u.cls]+' નો વિદ્યાર્થી'):L('Class '+u.cls+' student','ધોરણ '+u.cls+' નો વિદ્યાર્થી'))+'</span></span></div></div><div class="sec"><div class="stats"><div class="card"><b>'+n+'</b><small>'+L('Tests taken','આપેલી ટેસ્ટ')+'</small></div><div class="card"><b>'+avg+'%</b><small>'+L('Average','સરેરાશ')+'</small></div><div class="card"><b>'+best+'%</b><small>'+L('Best score','શ્રેષ્ઠ સ્કોર')+'</small></div></div></div><div class="sec"><h2>'+L('Details','વિગત')+'</h2><div class="card"><div class="kv"><span>'+L('Name','નામ')+'</span><span>'+esc(u.name)+'</span></div><div class="kv"><span>'+L('Mobile','મોબાઇલ')+'</span><span>+91 '+esc(u.mobile)+'</span></div><div class="kv"><span>'+(isExam(u)?L('Exam','પરીક્ષા'):L('Class','ધોરણ'))+'</span><span>'+clsName(u.cls)+'</span></div></div></div><div class="sec"><h2>'+L('Settings','સેટિંગ્સ')+'</h2>'+langSeg()+medSeg()+'<div class="field"><label>'+L('Change class or exam','ધોરણ અથવા પરીક્ષા બદલો')+'</label><div class="seg">'+seg+'</div></div></div><div class="sec"><h2>'+L('Test history','ટેસ્ટનો ઇતિહાસ')+'</h2><div class="list">'+hist+'</div></div><div class="sec"><button class="btn danger" data-act="logout">'+L('Log out','લૉગ આઉટ')+'</button></div></div>';
+}
+function viewAbout(){
+  var feats=[
+    [L('Study material for Classes 6 to 10','ધોરણ 6 થી 10 નું સ્ટડી મટીરીયલ')],
+    [L('JNVST and CET preparation in Gujarati and English medium','ગુજરાતી અને અંગ્રેજી માધ્યમમાં JNVST અને CET ની તૈયારી')],
+    [L('Subject PDFs for Mental Ability Test (MAT), Environment, Maths and Language','માનસિક ક્ષમતા કસોટી (MAT), પર્યાવરણ, ગણિત અને ભાષાની વિષય મુજબ PDF')],
+    [L('Practice papers and quizzes with instant results','તરત પરિણામ સાથે પ્રેક્ટિસ પેપર અને ક્વિઝ')],
+    [L('Your progress is saved in your profile','તમારી પ્રગતિ તમારી પ્રોફાઇલમાં સચવાય છે')]
+  ].map(function(f){return '<li>'+esc(f[0])+'</li>';}).join('');
+  var steps=[
+    L('Choose your language and log in with your mobile number and OTP.','ભાષા પસંદ કરો અને મોબાઇલ નંબર તથા OTP થી લૉગિન કરો.'),
+    L('Open Study or Entrance exams and pick your medium.','સ્ટડી અથવા પ્રવેશ પરીક્ષાઓ ખોલો અને તમારું માધ્યમ પસંદ કરો.'),
+    L('Read the PDFs, then take quizzes and practice papers.','PDF વાંચો, પછી ક્વિઝ અને પ્રેક્ટિસ પેપર આપો.')
+  ].map(function(f){return '<li>'+esc(f)+'</li>';}).join('');
+  return '<div class="top"><h1>'+L('About us','અમારા વિશે')+'</h1><p>'+L('Learning made simple','ભણતર બને સહજ')+'</p></div><div class="scroll"><div class="sec"><div class="card about"><div class="aboutlogo"><img src="'+LOGO+'" alt=""><b style="font-family:var(--f-display);font-size:20px">Sahaj Academy</b></div><p style="margin-top:12px">'+L('Sahaj Academy prepares students of Classes 6 to 10 for their school studies, and also coaches them for the JNVST and CET entrance exams. Learning is simple and step by step, in both Gujarati and English medium.','સહજ એકેડમી ધોરણ 6 થી 10 ના વિદ્યાર્થીઓને શાળાના અભ્યાસની તૈયારી કરાવે છે, અને JNVST તથા CET પ્રવેશ પરીક્ષાની તૈયારી પણ કરાવે છે. ભણતર સરળ અને ક્રમબદ્ધ છે, ગુજરાતી અને અંગ્રેજી બંને માધ્યમમાં.')+'</p></div></div><div class="sec"><h2>'+L('Our faculty','અમારા શિક્ષકો')+'</h2><div class="list"><div class="card"><b style="display:block">Mrs. Shweta Shah</b><span class="muted">M.Sc, M.Phil, GSET</span></div><div class="card"><b style="display:block">Dr. Sandip Shah</b><span class="muted">PhD English, M.A, B.A, LLB</span></div></div></div><div class="sec"><h2>'+L('Contact us','સંપર્ક કરો')+'</h2><div class="list"><a class="card item" href="tel:+917874537533" style="text-decoration:none;color:inherit"><span class="badge w" style="background:var(--accent);color:var(--accent-ink)">&#9990;</span><span class="grow"><b>7874537533</b><small class="muted">'+L('Tap to call','કૉલ કરવા ટૅપ કરો')+'</small></span></a><a class="card item" href="tel:+917698537533" style="text-decoration:none;color:inherit"><span class="badge w" style="background:var(--accent);color:var(--accent-ink)">&#9990;</span><span class="grow"><b>7698537533</b><small class="muted">'+L('Tap to call','કૉલ કરવા ટૅપ કરો')+'</small></span></a><a class="card item" href="tel:+919016537533" style="text-decoration:none;color:inherit"><span class="badge w" style="background:var(--accent);color:var(--accent-ink)">&#9990;</span><span class="grow"><b>9016537533</b><small class="muted">'+L('Tap to call','કૉલ કરવા ટૅપ કરો')+'</small></span></a><div class="card item"><span class="badge w" style="background:var(--accent);color:var(--accent-ink)">&#128205;</span><span class="grow"><b>'+L('Sahaj Academy, 2nd Floor, Sai Avenue, above Saptam Jewellers, Jhalod Road, Dahod','સહજ એકેડેમી, બીજો માળ, સાઈ એવેન્યુ, સપ્તમ જ્વેલર્સ ની ઉપર, ઝાલોદ રોડ, દાહોદ')+'</b></span></div></div></div><div class="sec"><h2>'+L('What you get in this app','આ એપમાં તમને શું મળશે')+'</h2><div class="card"><ul class="ticks">'+feats+'</ul></div></div><div class="sec"><h2>'+L('How to use it','કેવી રીતે વાપરવી')+'</h2><div class="card"><ol class="steps">'+steps+'</ol></div></div><div class="sec"><p class="muted" style="margin:0;text-align:center">Sahaj Academy &middot; v1.0</p></div></div>';
+}
+
+function render(){
+  var a=document.getElementById('app'),h='',tabs=false;
+  document.documentElement.lang=S.lang==='gu'?'gu':'en';
+  if(S.screen==='login')h=viewLogin();
+  else if(S.screen==='chapters')h=viewChapters();
+  else if(S.screen==='chapter')h=viewChapter();
+  else if(S.screen==='exam')h=viewExam();
+  else if(S.screen==='extopics')h=viewExTopics();
+  else if(S.screen==='pdf')h=viewPdf();
+  else if(S.screen==='quiz')h=viewQuiz();
+  else if(S.screen==='result')h=viewResult();
+  else{tabs=true;h=S.tab==='home'?viewHome():S.tab==='study'?viewStudy():S.tab==='tests'?viewTests():S.tab==='about'?viewAbout():viewProfile();}
+  if(tabs){
+    var T=[['home',L('Home','હોમ')],['study',L('Study','અભ્યાસ')],['tests',L('Tests','ટેસ્ટ')],['me',L('Profile','પ્રોફાઇલ')],['about',L('About us','અમારા વિશે')]];
+    h+='<nav class="tabbar" aria-label="Main">'+T.map(function(t){return '<button data-act="tab" data-v="'+t[0]+'" '+(S.tab===t[0]?'aria-current="page"':'')+'>'+ICON[t[0]]+'<span>'+t[1]+'</span></button>';}).join('')+'</nav>';
+  }
+  if(S.toast)h+='<div class="toast" role="status">'+esc(S.toast)+'</div>';
+  a.innerHTML=h;
+  if(S.screen==='login')bindLogin();
+  if(S.screen==='pdf')mountPdf();
+  var sc=a.querySelector('.scroll');if(sc&&S.keepScroll!=null){sc.scrollTop=S.keepScroll;S.keepScroll=null;}
+}
+
+/* ---------- In-app PDF viewer (pdf.js) ---------- */
+var PDFTOK=0,ZOOMS=[1,1.5,2,3];
+function viewPdf(){
+  return '<div class="bar"><button data-act="pdfback" aria-label="'+L('Back','પાછળ')+'">&#8592;</button><h2>'+esc(S.pdf.t)+'</h2><button class="zb" data-act="pdfzoom" data-v="-" aria-label="'+L('Zoom out','નાનું કરો')+'">&minus;</button><button class="zb" data-act="pdfzoom" data-v="+" aria-label="'+L('Zoom in','મોટું કરો')+'">+</button></div><div class="pdfwrap" id="pdfwrap"><p class="pdfmsg">'+L('Opening...','ખુલી રહ્યું છે...')+'</p></div>';
+}
+function pdfFail(wrap,tok){
+  if(tok!==PDFTOK)return;
+  wrap.innerHTML='<p class="pdfmsg">'+L('This PDF could not be opened.','આ PDF ખુલી શકી નથી.')+' <a href="'+esc(S.pdf.f)+'" target="_blank" rel="noopener">'+L('Open in browser','બ્રાઉઝરમાં ખોલો')+'</a></p>';
+}
+function mountPdf(){
+  var tok=++PDFTOK,wrap=document.getElementById('pdfwrap');
+  if(!wrap)return;
+  if(!window.pdfjsLib){pdfFail(wrap,tok);return;}
+  try{pdfjsLib.GlobalWorkerOptions.workerSrc='pdf.worker.min.js';}catch(e){}
+  var zoom=S.pdf.zoom||1;
+  pdfjsLib.getDocument(S.pdf.f).promise.then(function(doc){
+    if(tok!==PDFTOK)return;
+    var w=Math.max(260,wrap.clientWidth-16)*zoom,dpr=Math.min(window.devicePixelRatio||1,2),ps=[];
+    for(var i=1;i<=doc.numPages;i++)ps.push(doc.getPage(i));
+    return Promise.all(ps).then(function(pgs){
+      if(tok!==PDFTOK)return;
+      wrap.innerHTML='';
+      var obs=new IntersectionObserver(function(es){es.forEach(function(e){var bx=e.target;bx._vis=e.isIntersecting;if(e.isIntersecting)draw(bx);else if(bx._on){bx.innerHTML='';bx._on=false;}});},{root:wrap,rootMargin:'900px 0px'});
+      function draw(bx){
+        if(bx._on||bx._busy)return;bx._busy=true;
+        var pg=bx._pg,sc=w/pg.getViewport({scale:1}).width,vp=pg.getViewport({scale:sc*dpr}),c=document.createElement('canvas');
+        c.width=vp.width;c.height=vp.height;c.style.width=w+'px';c.style.height=(vp.height/dpr)+'px';
+        pg.render({canvasContext:c.getContext('2d'),viewport:vp}).promise.then(function(){
+          bx._busy=false;
+          if(tok===PDFTOK&&bx._vis){bx.innerHTML='';bx.appendChild(c);bx._on=true;}
+        },function(){bx._busy=false;});
+      }
+      pgs.forEach(function(pg){
+        var v0=pg.getViewport({scale:1}),bx=document.createElement('div');
+        bx.className='pgbox';bx.style.width=w+'px';bx.style.height=(w*v0.height/v0.width)+'px';bx._pg=pg;
+        wrap.appendChild(bx);obs.observe(bx);
+      });
+    });
+  }).catch(function(){pdfFail(wrap,tok);});
+}
+function startExamQuiz(ex,k,from){
+  var m=curMed();
+  S.test={key:ex+'-'+k+'-'+m,meta:{x:ex,k:k,m:m},qs:exQs(ex,k,m),i:0,ans:[],from:from};S.screen='quiz';render();
+}
+function goBack(){
+  var s=S.screen;
+  if(s==='pdf'){PDFTOK++;S.screen=S.pdf.from||'main';S.pdf=null;render();return true;}
+  if(s==='quiz'||s==='result'){var fr=S.test&&S.test.from;S.test=null;S.screen=fr==='exam'?'extopics':'main';if(fr==='main')S.tab='tests';render();return true;}
+  if(s==='extopics'){S.screen=isExam(S.user)?'main':'exam';render();return true;}
+  if(s==='exam'){S.screen='main';render();return true;}
+  if(s==='chapter'){S.screen='chapters';render();return true;}
+  if(s==='chapters'){S.screen='main';S.tab='study';render();return true;}
+  if(s==='main'&&S.tab!=='home'){S.tab='home';render();return true;}
+  return false;
+}
+
+/* ---------- Login logic ---------- */
+function bindLogin(){
+  var fp=document.getElementById('f-phone'),fo=document.getElementById('f-otp'),fs=document.getElementById('f-setup');
+  if(fp){fp.addEventListener('submit',function(e){e.preventDefault();var v=document.getElementById('mob').value.replace(/\D/g,'');
+    if(!/^[6-9]\d{9}$/.test(v)){S.phone=v;S.err='phone';render();return;}
+    S.phone=v;S.sentOtp=String(100000+Math.floor(Math.random()*900000));S.err='';S.step='otp';render();});}
+  if(fo){var ins=[].slice.call(fo.querySelectorAll('.otp input'));
+    ins.forEach(function(inp,i){
+      inp.addEventListener('input',function(){inp.value=inp.value.replace(/\D/g,'').slice(0,1);if(inp.value&&ins[i+1])ins[i+1].focus();});
+      inp.addEventListener('keydown',function(e){if(e.key==='Backspace'&&!inp.value&&ins[i-1])ins[i-1].focus();});
+      inp.addEventListener('paste',function(e){var t=(e.clipboardData||window.clipboardData).getData('text').replace(/\D/g,'').slice(0,6);if(t){e.preventDefault();t.split('').forEach(function(ch,j){if(ins[j])ins[j].value=ch;});}});
+    });
+    if(ins[0])ins[0].focus();
+    fo.addEventListener('submit',function(e){e.preventDefault();var code=ins.map(function(x){return x.value;}).join('');
+      if(code!==S.sentOtp){S.err='otp';document.getElementById('err').textContent=errText();return;}
+      S.err='';var old=null;try{old=JSON.parse(localStorage.getItem('vp_user')||'null');}catch(x){}
+      if(old&&old.mobile===S.phone){S.user=old;S.screen='main';S.tab='home';save();render();}
+      else{S.step='setup';S.draftName='';S.draftCls=null;render();}});}
+  if(fs){fs.addEventListener('submit',function(e){e.preventDefault();var n=document.getElementById('nm').value.trim();S.draftName=n;
+    if(n.length<2){S.err='name';render();return;}
+    if(!S.draftCls){S.err='cls';render();return;}
+    S.err='';S.user={name:n,mobile:S.phone,cls:S.draftCls,med:S.lang};S.screen='main';S.tab='home';save();render();});}
+}
+
+/* ---------- Events ---------- */
+function keepScroll(){var sc=document.querySelector('.scroll');S.keepScroll=sc?sc.scrollTop:0;}
+document.addEventListener('click',function(e){
+  var el=e.target.closest('[data-act]');if(!el)return;var act=el.getAttribute('data-act'),v=el.getAttribute('data-v');
+  if(act==='lang'){
+    var mob=document.getElementById('mob');if(mob)S.phone=mob.value.replace(/\D/g,'');
+    var nm=document.getElementById('nm');if(nm)S.draftName=nm.value;
+    keepScroll();S.lang=v;saveLang();render();
+  }
+  else if(act==='changenum'){S.step='phone';S.err='';render();}
+  else if(act==='pickcls'){var nm2=document.getElementById('nm');if(nm2)S.draftName=nm2.value;S.draftCls=parseTrack(v);S.err='';render();}
+  else if(act==='tab'){S.tab=v;S.screen='main';render();}
+  else if(act==='subject'){S.subj=v;S.screen='chapters';render();}
+  else if(act==='back-study'){S.screen='main';S.tab='study';render();}
+  else if(act==='chapter'){S.chapter=+v;S.screen='chapter';render();}
+  else if(act==='back-chapters'){S.screen='chapters';render();}
+  else if(act==='pdf'){toast(L('Demo app: the chapter PDF will open here.','ડેમો એપ: અહીં પ્રકરણની PDF ખુલશે.'));}
+  else if(act==='starttest'){
+    var key=S.user.cls+'-'+v,qs=classQs(key);
+    if(!qs.length){toast(L('This test will be added soon.','આ ટેસ્ટ જલ્દી ઉમેરાશે.'));return;}
+    S.test={key:key,meta:{c:S.user.cls,k:v},qs:qs,i:0,ans:[],from:'main'};S.screen='quiz';render();}
+  else if(act==='opt'){S.test.ans[S.test.i]=+v;render();}
+  else if(act==='next'){
+    var t=S.test;
+    if(t.i<t.qs.length-1){t.i++;render();}
+    else{var sc=0;t.qs.forEach(function(q,i){if(t.ans[i]===q.a)sc++;});
+      S.results.push({key:t.key,meta:t.meta,score:sc,total:t.qs.length,ts:Date.now()});save();S.screen='result';render();}}
+  else if(act==='quit'){goBack();}
+  else if(act==='exam'){S.ex={exam:v};S.screen='exam';render();}
+  else if(act==='exback'){S.screen='main';render();}
+  else if(act==='med'){S.user.med=v;save();keepScroll();render();}
+  else if(act==='exsubj'){S.ex=S.ex||{};if(isExam(S.user))S.ex.exam=S.user.cls;S.ex.subj=v;S.screen='extopics';render();}
+  else if(act==='back-exam'){S.screen=isExam(S.user)?'main':'exam';render();}
+  else if(act==='extest'){startExamQuiz(S.ex.exam,S.ex.subj,'exam');}
+  else if(act==='exquiz'){startExamQuiz(S.user.cls,v,'examdirect');}
+  else if(act==='openpdf'){S.pdf={f:el.getAttribute('data-f'),t:el.getAttribute('data-t'),from:S.screen,zoom:1};S.screen='pdf';render();}
+  else if(act==='pdfback'){goBack();}
+  else if(act==='pdfzoom'){var zi=ZOOMS.indexOf(S.pdf.zoom||1);zi=Math.max(0,Math.min(ZOOMS.length-1,zi+(v==='+'?1:-1)));S.pdf.zoom=ZOOMS[zi];mountPdf();}
+  else if(act==='setcls'){S.user.cls=parseTrack(v);save();keepScroll();render();toast(clsName(S.user.cls)+L(' selected.',' પસંદ કર્યું.'));}
+  else if(act==='logout'){S.user=null;S.results=[];clearSaved();S.screen='login';S.step='phone';S.phone='';S.err='';render();}
+});
+function exQs(ex,k,m){return EXD[ex][k].q.map(function(r){return m==='gu'?Q(r[3],r[4],r[2]):Q(r[0],r[1],r[2]);});}
+
+try{var CAP=window.Capacitor,APP=CAP&&CAP.Plugins&&CAP.Plugins.App;if(APP&&APP.addListener)APP.addListener('backButton',function(){if(!goBack())APP.exitApp();});}catch(e){}
+load();render();
+</script>
+</body></html>

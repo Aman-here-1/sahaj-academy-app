@@ -1,0 +1,13 @@
+{
+  "appId": "com.sahajacademy.app",
+  "appName": "Sahaj Academy",
+  "webDir": "www",
+  "backgroundColor": "#14213d",
+  "plugins": {
+    "StatusBar": {
+      "style": "DARK",
+      "backgroundColor": "#14213d",
+      "overlaysWebView": false
+    }
+  }
+}
