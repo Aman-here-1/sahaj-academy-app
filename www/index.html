@@ -236,6 +236,34 @@ var PDF={
    "mb": "1.4",
    "en": "Mirror Image (Aakruti)",
    "gu": "મિરર ઇમેજ (આકૃતિ)"
+  },
+  {
+   "f": "pdfs/mat-embedded-figure-gujarati.pdf",
+   "med": "gu",
+   "pg": 18,
+   "mb": "1.2",
+   "gu": "એમ્બેડેડ ફિગર (આકૃતિ)"
+  },
+  {
+   "f": "pdfs/mat-figure-series-completion-gujarati.pdf",
+   "med": "gu",
+   "pg": 23,
+   "mb": "2.1",
+   "gu": "ફિગર સિરીઝ કમ્પ્લીશન"
+  },
+  {
+   "f": "pdfs/mat-geometrical-figure-completion-gujarati.pdf",
+   "med": "gu",
+   "pg": 20,
+   "mb": "2.3",
+   "gu": "ભૌમિતિક આકૃતિ કમ્પ્લીશન"
+  },
+  {
+   "f": "pdfs/mat-pattern-completion-gujarati.pdf",
+   "med": "gu",
+   "pg": 22,
+   "mb": "2.0",
+   "gu": "પેટર્ન કમ્પ્લીશન"
   }
  ],
  "env": [
@@ -574,6 +602,11 @@ function startEvset(ex,id,from){
     S.test={key:ex+'-env-'+id,meta:{x:ex,k:'env',ev:i+1,m:'gu'},qs:EVSETS[i].q.map(function(r){return Q(r[0],r[1],r[2]);}),i:0,ans:[],from:from};S.screen='quiz';render();return;
   }
 }
+function evsSec(ex){
+  var m=curMed();
+  var body=m==='gu'?'<div class="list">'+evsetRows(ex)+'</div>':'<div class="card muted">'+L('EVS test papers are in Gujarati medium. Switch the medium above to Gujarati to open them.','EVS ટેસ્ટ પેપર ગુજરાતી માધ્યમમાં છે. તે ખોલવા ઉપર માધ્યમ ગુજરાતી પસંદ કરો.')+'</div>';
+  return '<div class="sec"><h2>'+L('EVS test papers','EVS ટેસ્ટ પેપર')+'</h2>'+body+'</div>';
+}
 function viewEvhub(){
   var ex=S.ex.exam,m=curMed();
   var quick='<button class="card item" data-act="exquiz" data-v="env"><span class="badge w" style="background:'+EXS.env.c+'">'+EXS.env.b+'</span><span class="grow"><b>'+L('Quick quiz','ક્વિક ક્વિઝ')+'</b><small class="muted">'+EXD[ex].env.q.length+L(' questions · MCQ',' પ્રશ્નો · MCQ')+'</small></span>'+bestPill(bestFor(ex+'-env-'+m))+'</button>';
@@ -602,7 +635,7 @@ function viewExTopics(){
   var rows=list.length?list.map(function(x){return pdfCard(x,m);}).join(''):'<div class="card muted">'+(prac?L('Practice papers for this exam and medium will be added soon.','આ પરીક્ષા અને માધ્યમના પ્રેક્ટિસ પેપર જલ્દી ઉમેરાશે.'):L('Study material for this medium will be added soon.','આ માધ્યમનું સ્ટડી મટીરીયલ જલ્દી ઉમેરાશે.'))+'</div>';
   var head=prac?L('Test papers','ટેસ્ટ પેપર'):L('Study material','સ્ટડી મટીરીયલ');
   var quiz=prac?'':'<div class="sec"><h2>'+L('Quick quiz','ક્વિઝ')+'</h2><button class="btn" data-act="extest">'+L('Take a practice quiz','પ્રેક્ટિસ ક્વિઝ આપો')+'</button></div>';
-  return bar(EXS[k][S.lang]+' · '+EXN[ex],'back-exam')+'<div class="scroll"><div class="sec">'+medSeg()+'</div><div class="sec"><h2>'+head+'</h2><div class="list">'+rows+'</div></div>'+quiz+(k==='mth'?msetSec(ex):'')+'</div>';
+  return bar(EXS[k][S.lang]+' · '+EXN[ex],'back-exam')+'<div class="scroll"><div class="sec">'+medSeg()+'</div><div class="sec"><h2>'+head+'</h2><div class="list">'+rows+'</div></div>'+quiz+(k==='mth'?msetSec(ex):k==='env'?evsSec(ex):'')+'</div>';
 }
 
 /* ---- Tests tab, quiz, result ---- */
@@ -799,7 +832,7 @@ document.addEventListener('click',function(e){
   else if(act==='back-exam'){S.screen=isExam(S.user)?'main':'exam';render();}
   else if(act==='extest'){startExamQuiz(S.ex.exam,S.ex.subj,'exam');}
   else if(act==='evhub'){S.ex={exam:S.user.cls,subj:'env'};S.screen='evhub';render();}
-  else if(act==='evset'){startEvset(isExam(S.user)?S.user.cls:S.ex.exam,v,'evhub');}
+  else if(act==='evset'){startEvset(isExam(S.user)?S.user.cls:S.ex.exam,v,S.screen==='extopics'?'exam':'evhub');}
   else if(act==='mhub'){S.ex={exam:S.user.cls,subj:'mth'};S.screen='mhub';render();}
   else if(act==='mset'){startMset(isExam(S.user)?S.user.cls:S.ex.exam,v,S.screen==='extopics'?'exam':S.screen==='mhub'?'mhub':'examdirect');}
   else if(act==='exquiz'){startExamQuiz(S.user.cls,v,S.screen==='mhub'?'mhub':S.screen==='evhub'?'evhub':'examdirect');}
